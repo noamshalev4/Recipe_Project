@@ -2,7 +2,6 @@ package com.example.demo.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Set;
 
 @Entity
@@ -19,7 +18,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    private String ingredientName;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private IngredientType ingredientType;
@@ -30,6 +29,5 @@ public class Ingredient {
     private String imageURL;
 
     @ManyToMany(mappedBy = "ingredients")
-    @ToString.Exclude
-    private Set<Meal> meals;
+    private Set<Recipe> recipes;
 }
