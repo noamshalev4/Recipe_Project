@@ -1,0 +1,6 @@
+package com.example.demo.entities;
+
+public enum IngredientType {
+    PROTEIN, CARBOHYDRATES, FATS, VEGETABLES, FRUITS, DAIRY_PRODUCTS,
+    SPICES_AND_HERBS, SWEETENERS, LIQUIDS_AND_ADDITIONAL_INGREDIENTS;
+}
