@@ -2,11 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Ingredient;
 import com.example.demo.entities.Recipe;
-import com.example.demo.exceptions.RecipeBookException;
-import com.example.demo.repositories.RecipeRepository;
 import com.example.demo.services.RecipeBookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;

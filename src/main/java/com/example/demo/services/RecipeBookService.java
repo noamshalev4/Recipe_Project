@@ -38,6 +38,9 @@ public class RecipeBookService {
 
     @Transactional
     public void deleteRecipe(Long id) {
+        if (!recipeRepository.existsById(id)) {
+            throw new RecipeBookException("Recipe not found");
+        }
         recipeRepository.deleteById(id);
     }
 
