@@ -1,0 +1,13 @@
+body.bg-dark {
+  background-color: #121212 !important;
+  color: white !important;
+}
+
+body.bg-light {
+  background-color: #f8f9fa !important;
+  color: black !important;
+}
+
+footer {
+  background-color: #f8f9fa;
+}
