@@ -3,7 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import { FaUtensils } from 'react-icons/fa'; // Importing React Icon for a cooking theme
-import logo from "../../../assets//home_english.png";
+import logo from "../../../assets//home_english_no_kitchen.png";
 
 
 export function Home(): JSX.Element | null {
@@ -26,7 +26,7 @@ export function Home(): JSX.Element | null {
                 <img
                     src={logo} // replace with your actual image path
                     alt="Reciply Banner"
-                    className="img-fluid rounded mb-4 shadow"
+                    // className="img-fluid rounded mb-4 shadow"
                     style={{
                         maxWidth: '100%',
                         height: 'auto',
@@ -48,7 +48,7 @@ export function Home(): JSX.Element | null {
                             borderRadius: '30px',
                             minWidth: '300px',
                             maxWidth: '500px',
-                            background: 'linear-gradient(145deg, #6ab04c, #55b85e)',
+                            background: 'linear-gradient(145deg, #2C71C1,rgb(58, 133, 219))',
                             color: '#fff',
                             fontWeight: '700',
                             padding: '20px',

@@ -6,7 +6,6 @@ import './Components/i18n/i18n'; // Your i18n setup
 import { MyFooter } from './Components/Layout/MyFooter/MyFooter';
 
 function App() {
-  
     return (
         <ThemeProvider>
             <MyNavbar />

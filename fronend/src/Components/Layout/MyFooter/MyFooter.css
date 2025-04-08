@@ -52,3 +52,20 @@ footer p {
         margin-top: 15px; /* Adds some space for mobile view */
     }
 }
+/* Optional: Style adjustments for dark mode */
+footer.bg-dark {
+    background-color: #121212;  /* Dark background color */
+  }
+  
+  footer.text-light {
+    color: #f8f9fa;  /* Light text color */
+  }
+  
+  footer.bg-light {
+    background-color: #f8f9fa;  /* Light background color */
+  }
+  
+  footer.text-dark {
+    color: #212529;  /* Dark text color */
+  }
+  

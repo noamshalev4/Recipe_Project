@@ -1,22 +1,29 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 
 interface ThemeContextProps {
   isDarkMode: boolean;
   toggleTheme: () => void;
 }
 
-// Typing the ThemeProvider component props to include 'children' (ReactNode)
 interface ThemeProviderProps {
-  children: ReactNode;  // Add this line
+  children: ReactNode;
 }
 
 export const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+
+// Custom hook to use the theme context
+export const useTheme = (): ThemeContextProps => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
-    // Check localStorage for theme preference on page load
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       setIsDarkMode(true);
@@ -43,7 +50,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
-      {children}  {/* Render children passed to ThemeProvider */}
+      {children}
     </ThemeContext.Provider>
   );
 };
