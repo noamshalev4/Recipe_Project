@@ -27,9 +27,9 @@ export function MyNavbar(): JSX.Element {
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">
                     <Nav className="ms-auto align-items-center">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/abouts">About</Nav.Link>
+                        <Nav.Link href="/pricing">Pricing</Nav.Link>
                         <NavDropdown title="More" id="nav-dropdown">
                             <NavDropdown.Item href="#action1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action2">Another Action</NavDropdown.Item>

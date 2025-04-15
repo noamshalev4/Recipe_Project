@@ -4,14 +4,15 @@ import { useTranslation } from "react-i18next";
 import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import { FaUtensils } from 'react-icons/fa'; // Importing React Icon for a cooking theme
 import logo from "../../../assets//home_english_no_kitchen.png";
-
+import { useNavigate } from "react-router-dom";
 
 export function Home(): JSX.Element | null {
     const { t } = useTranslation();
     const { isDarkMode } = useContext(ThemeContext)!;
 
     const [isMounted, setIsMounted] = useState(false);
-
+    const navigation = useNavigate();
+    
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -38,6 +39,7 @@ export function Home(): JSX.Element | null {
                 {/* Button centered to the left of the image */}
                 <div className="button-container" style={{ position: 'relative', top: '-50px' }}>
                     <Button
+                        onClick= {()=> navigation("/wizard-form") }
                         variant="success"
                         size="lg"
                         className="px-5 py-4 fs-2 fw-bold shadow rounded-pill d-flex align-items-center justify-content-center"

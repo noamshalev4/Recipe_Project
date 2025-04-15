@@ -1,0 +1,46 @@
+.WizardForm .step-container {
+    position: relative;
+    transition: transform 0.3s ease-out;
+    min-height: 300px;
+}
+
+.WizardForm .step {
+    padding: 10px;
+}
+
+.WizardForm .slide-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.WizardForm .slide-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.WizardForm .step-indicator span {
+    font-size: 14px;
+    color: #6c757d;
+    position: relative;
+    z-index: 1;
+}
+
+.WizardForm .step-indicator span.active {
+    color: #198754;
+    font-weight: 600;
+}
+
+.WizardForm .ingredients-selection {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.WizardForm .card-header {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.WizardForm .selected-ingredients {
+    border-top: 1px solid #dee2e6;
+    padding-top: 15px;
+}
