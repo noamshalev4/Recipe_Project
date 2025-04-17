@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "./Routing.css";
 import { Home } from "../Home/Home";
@@ -25,6 +25,7 @@ export function Routing(): JSX.Element {
                     <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/wizard-form" element={<WizardForm />} />
+                    <Route path="/404not-found" element={<NotFound404 />} />
                     
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<NotFound404 />} />

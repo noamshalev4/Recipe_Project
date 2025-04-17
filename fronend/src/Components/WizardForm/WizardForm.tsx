@@ -30,7 +30,7 @@ const ingredientsByCategory: Record<IngredientCategory, string[]> = {
 };
 
 export function WizardForm(): JSX.Element {
-    const { isDarkMode, toggleTheme } = useTheme();  // <-- Consume the theme context
+    const { isDarkMode } = useTheme();  // <-- Consume the theme context
 
     const [currentStep, setCurrentStep] = useState(1);
     const [sliding, setSliding] = useState(false);
