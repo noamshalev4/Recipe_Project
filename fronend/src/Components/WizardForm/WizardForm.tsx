@@ -10,6 +10,7 @@ enum IngredientCategory {
     FATS = "Fats",
     VEGETABLES = "Vegetables",
     FRUITS = "Fruits",
+    Dry_FRUITS = "Dry fruits",
     DAIRY_PRODUCTS = "Dairy Products",
     SPICES_AND_HERBS = "Spices and Herbs",
     SWEETENERS = "Sweeteners",
@@ -18,15 +19,16 @@ enum IngredientCategory {
 
 // Sample ingredients data structure
 const ingredientsByCategory: Record<IngredientCategory, string[]> = {
-    [IngredientCategory.PROTEIN]: ["Chicken", "Beef", "Tofu", "Fish", "Eggs", "Pork", "Lamb", "Shrimp"],
-    [IngredientCategory.CARBOHYDRATES]: ["Rice", "Pasta", "Bread", "Potatoes", "Quinoa", "Oats", "Barley"],
-    [IngredientCategory.FATS]: ["Olive Oil", "Butter", "Avocado", "Coconut Oil", "Sesame Oil", "Nuts"],
-    [IngredientCategory.VEGETABLES]: ["Tomatoes", "Onions", "Bell Peppers", "Carrots", "Spinach", "Broccoli", "Zucchini"],
-    [IngredientCategory.FRUITS]: ["Apples", "Bananas", "Berries", "Citrus", "Mango", "Pineapple"],
+    [IngredientCategory.PROTEIN]: ["Chicken", "Beef", "Tofu", "Fish", "Eggs"],
+    [IngredientCategory.CARBOHYDRATES]: ["Rice", "Pasta", "Bread", "Quinoa", "Oats", "Buckwheat"],
+    [IngredientCategory.FATS]: ["Olive Oil", "Avocado", "Coconut Oil", "Sesame Oil", "Walnut", "Almonds", "Pecans", "Hazelnut", "Macadamia nut", "Brazil nut", "white sesame", "Black sesame", "Black cumin seed", "Linen seed", "Chia seeds", "Pine nuts", "Sunflower seeds", "Pumpkin seeds", "Tahini"],
+    [IngredientCategory.VEGETABLES]: ["Tomatoes", "Cucumber", "White onion", "Purple onion", "Garlic", "Bell Peppers", "Carrots", "White cabbage", "Purple cabbage", "Radish", "Spinach", "Broccoli", "Zucchini", "Potato", "Sweet potato", "Beet root", "Chard", "Kolorbi"],
+    [IngredientCategory.FRUITS]: ["Apples", "Bananas", "Berries", "Oranges", "Lemons", "Mango", "Pineapple", "Grapes", "Watermelon", "Melon", "Plum"],
+    [IngredientCategory.Dry_FRUITS]: ["Cranberries", "Dates", "Apricot", "Plum"],
     [IngredientCategory.DAIRY_PRODUCTS]: ["Milk", "Cheese", "Yogurt", "Cream", "Butter", "Sour Cream"],
     [IngredientCategory.SPICES_AND_HERBS]: ["Salt", "Pepper", "Basil", "Oregano", "Cumin", "Paprika", "Cinnamon"],
     [IngredientCategory.SWEETENERS]: ["Sugar", "Honey", "Maple Syrup", "Stevia", "Brown Sugar"],
-    [IngredientCategory.LIQUIDS_AND_ADDITIONAL_INGREDIENTS]: ["Water", "Stock", "Wine", "Vinegar", "Soy Sauce", "Tomato Sauce"]
+    [IngredientCategory.LIQUIDS_AND_ADDITIONAL_INGREDIENTS]: ["Water", "Vegetable stock", "Beef stock", "Fish stock", "Red wine", "White wine", "Vinegar", "Soy Sauce", "Tomato Sauce"]
 };
 
 export function WizardForm(): JSX.Element {
