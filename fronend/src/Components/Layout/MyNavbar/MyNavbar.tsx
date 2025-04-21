@@ -28,7 +28,7 @@ export function MyNavbar(): JSX.Element {
                 <Navbar.Collapse id="main-navbar">
                     <Nav className="ms-auto align-items-center">
                         <Nav.Link href="/home">Home</Nav.Link>
-                        <Nav.Link href="/abouts">About</Nav.Link>
+                        <Nav.Link href="/about">About</Nav.Link>
                         <Nav.Link href="/pricing">Pricing</Nav.Link>
                         <NavDropdown title="More" id="nav-dropdown">
                             <NavDropdown.Item href="#action1">Action</NavDropdown.Item>
