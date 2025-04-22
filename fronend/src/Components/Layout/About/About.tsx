@@ -5,7 +5,7 @@ import { ThemeContext } from '../../../Context/ThemeContext/ThemeContext';
 import { motion } from 'framer-motion';
 import { GiCook, GiCookingPot, GiNotebook } from 'react-icons/gi';
 import { FaHeart } from 'react-icons/fa';
-import chefImage from '../../../assets/chef_figure.png'; // Make sure to use the correct path
+import chefImage from '../../../assets/chef_figure2.png'; // Make sure to use the correct path
 import './About.css';
 
 export function About(): React.JSX.Element {
@@ -31,7 +31,7 @@ export function About(): React.JSX.Element {
     <div className={`about-page ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
       <div className="chef-banner">
         <Container>
-          <Row className="align-items-center">
+          <Row className="px-5 align-items-center">
             <Col md={6} className="text-center text-md-start">
               <motion.div
                 initial="hidden"
@@ -162,28 +162,6 @@ export function About(): React.JSX.Element {
                   </p>
                 </Card.Body>
               </Card>
-            </motion.div>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col lg={10} className="mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="text-center"
-            >
-              <div className={`mission-statement p-4 rounded-3 ${isDarkMode ? 'bg-dark-subtle' : 'bg-light-subtle'}`}>
-                <h3 className="h4 mb-3">Our Mission</h3>
-                <p className="mb-0">
-                  To empower home cooks of all skill levels to create delicious, satisfying meals with the ingredients they already have, making cooking an accessible and joyful experience for everyone.
-                </p>
-                <div className="mt-3">
-                  <FaHeart className="text-danger" size={24} />
-                </div>
-              </div>
             </motion.div>
           </Col>
         </Row>

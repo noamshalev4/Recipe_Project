@@ -16,13 +16,13 @@ export function NotFound404(): JSX.Element {
             </div>
             
             <Container className="content-container">
-                <Row className="justify-content-center">
-                    <Col xs={12} md={8} lg={6}>
-                        <div className="text-center p-4 transparent-container">
+                <Row className="justify-content-center align-items-center min-vh-100">
+                    <Col className="mt-5 ms-2" xs={12} md={10} lg={8}>
+                        <div className="text-center transparent-container">
                             <h2 className="mb-3 subtitle">Oops! This recipe is still in the oven...</h2>
                             <p className="mb-4 message-text">We couldn't find the page you were looking for. Maybe it got too spicy and ran off?</p>
                             <Link to="/">
-                                <Button variant={isDarkMode ? "light" : "dark"} size="lg" className="px-4 py-2 mb-4 home-button">
+                                <Button variant={isDarkMode ? "dark" : "light"} size="lg" className="px-4 py-2 mb-4 home-button">
                                     Back to Home Kitchen
                                 </Button>
                             </Link>

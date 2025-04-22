@@ -5,7 +5,7 @@ const resources = {
   en: {
     translation: {
       "home": "Home",
-      "features": "Features",
+      "about": "About",
       "pricing": "Pricing",
       "footer": "© 2025 Reciply, All Rights Reserved.",
       "backToTop": "Back to Top",
@@ -15,7 +15,7 @@ const resources = {
   he: {
     translation: {
       "home": "דף הבית",
-      "features": "תכונות",
+      "about": "אודות",
       "pricing": "תמחור",
       "footer": "© 2025 רסיפלי, כל הזכויות שמורות.",
       "backToTop": "חזרה למעלה",

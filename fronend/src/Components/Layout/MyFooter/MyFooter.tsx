@@ -1,8 +1,9 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaFacebook, FaWhatsapp, FaInstagram, FaEnvelope, FaArrowUp } from 'react-icons/fa'; // Importing icons
+import { FaFacebook, FaWhatsapp, FaInstagram, FaEnvelope, FaArrowUp, FaHeart } from 'react-icons/fa'; // Importing icons
 import { useState, useEffect, JSX } from 'react';
 import { useTheme } from '../../../Context/ThemeContext/ThemeContext';  // <-- Import useTheme
 import './MyFooter.css';
+import { motion } from 'framer-motion';
 
 export function MyFooter(): JSX.Element {
   const { isDarkMode, toggleTheme } = useTheme();  // <-- Consume the theme context
@@ -20,11 +21,42 @@ export function MyFooter(): JSX.Element {
       behavior: 'smooth',
     });
   };
+  const fadeIn = {
+      hidden: { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.8,
+        },
+      },
+    };
 
   return (
-    <footer className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} text-center text-lg-start`}>
+    <footer className={`my-5 ${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} text-center text-lg-start`}>
       <Container fluid>
         {/* First Row: Centered Text */}
+        <Row>
+          <Col lg={10} className="mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              className="text-center"
+            >
+              <div className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+                <h3 className="h4 mb-3">Our Mission</h3>
+                <p className="mb-0">
+                  To empower home cooks of all skill levels to create delicious, satisfying meals with the ingredients they already have, making cooking an accessible and joyful experience for everyone.
+                </p>
+                <div className="mt-3">
+                  <FaHeart className="text-danger" size={24} />
+                </div>
+              </div>
+            </motion.div>
+          </Col>
+        </Row>
         <Row className="py-4">
           <Col className="d-flex justify-content-center">
             <p>© {currentDate} Reciply, All Rights Reserved.</p>

@@ -1,0 +1,90 @@
+.contact-page {
+    min-height: 100vh;
+    transition: all 0.3s ease;
+  }
+  
+  .dark-mode {
+    background-color: #222;
+    color: #f8f9fa;
+  }
+  
+  .light-mode {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .icon-light {
+    background-color: rgba(58, 133, 219, 0.1);
+    color: #2C71C1;
+  }
+  
+  .icon-dark {
+    background-color: rgba(58, 133, 219, 0.2);
+    color: #5594e2;
+  }
+  
+  .btn-gradient {
+    background: linear-gradient(145deg, #2C71C1, #3a85db);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 113, 193, 0.3);
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .social-light {
+    background-color: rgba(58, 133, 219, 0.1);
+    color: #2C71C1;
+  }
+  
+  .social-dark {
+    background-color: rgba(58, 133, 219, 0.2);
+    color: #5594e2;
+  }
+  
+  .social-link:hover {
+    transform: translateY(-2px);
+    color: #fff;
+    background: linear-gradient(145deg, #2C71C1, #3a85db);
+  }
+  
+  .dark-mode .form-control {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #fff;
+  }
+  
+  .dark-mode .form-control:focus {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(58, 133, 219, 0.25);
+  }
+  
+  .dark-mode .form-control::placeholder {
+    color: #a0aec0;
+  }

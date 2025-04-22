@@ -5,6 +5,7 @@ import { ThemeContext } from "../../../Context/ThemeContext/ThemeContext";
 import { FaUtensils } from 'react-icons/fa'; // Importing React Icon for a cooking theme
 import logo from "../../../assets//home_english_no_kitchen.png";
 import { useNavigate } from "react-router-dom";
+import './Home.css'; // Importing CSS for styling
 
 export function Home(): JSX.Element | null {
     const { t } = useTranslation();
@@ -21,7 +22,7 @@ export function Home(): JSX.Element | null {
 
     return (
         <div className="Home">
-            <Container className={`my-4 py-5 text-center rounded ${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+            <Container className={`Background my-4 py-5 text-center rounded ${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
 
                 {/* Image */}
                 <img
@@ -33,11 +34,12 @@ export function Home(): JSX.Element | null {
                         height: 'auto',
                         objectFit: 'cover',
                         maxHeight: '800px',
+                        marginRight: "120px"
                     }}
                 />
 
                 {/* Button centered to the left of the image */}
-                <div className="button-container" style={{ position: 'relative', top: '-50px' }}>
+                <div className="button-container" style={{ position: 'relative', top: '0px' }}>
                     <Button
                         onClick= {()=> navigation("/wizard-form") }
                         variant="success"

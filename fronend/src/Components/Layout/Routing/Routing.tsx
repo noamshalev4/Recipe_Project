@@ -7,6 +7,7 @@ import { NotFound404 } from "../../NotFound404/NotFound404";
 import { About } from "../About/About";
 import { WizardForm } from "../../WizardForm/WizardForm";
 import App from "../../../App";
+import { Contact } from "../Contact/Contact";
 
 // Import your pages here
 
@@ -25,7 +26,7 @@ export function Routing(): JSX.Element {
                     <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/wizard-form" element={<WizardForm />} />
-                    <Route path="/404not-found" element={<NotFound404 />} />
+                    <Route path="/contact" element={<Contact />} />
                     
                     {/* Catch-all route for 404 errors */}
                     <Route path="*" element={<NotFound404 />} />
