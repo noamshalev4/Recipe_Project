@@ -44,3 +44,32 @@
     border-top: 1px solid #dee2e6;
     padding-top: 15px;
 }
+
+/* RTL support */
+.WizardForm.rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .WizardForm.rtl .step-indicator {
+    flex-direction: row-reverse;
+  }
+  
+  .WizardForm.rtl .ingredient-selection {
+    text-align: right;
+  }
+  
+  .WizardForm.rtl .card-header {
+    text-align: right;
+  }
+  
+  .WizardForm.rtl .form-check {
+    padding-right: 1.5em;
+    padding-left: 0;
+  }
+  
+  .WizardForm.rtl .form-check .form-check-input {
+    float: right;
+    margin-right: -1.5em;
+    margin-left: 0;
+  }

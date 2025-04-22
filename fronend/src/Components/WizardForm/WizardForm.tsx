@@ -2,8 +2,9 @@ import { JSX, useState } from "react";
 import { Card, Button, ProgressBar, Form, Container, Row, Col, Badge, InputGroup } from "react-bootstrap";
 import "./WizardForm.css";
 import { useTheme } from "../../Context/ThemeContext/ThemeContext";
+import { useTranslation } from "react-i18next"; // Add this import
 
-// Define ingredient categories
+// Define ingredient categories - keep enum in English for consistency
 enum IngredientCategory {
     PROTEIN = "Protein",
     CARBOHYDRATES = "Carbohydrates",
@@ -21,19 +22,20 @@ enum IngredientCategory {
 const ingredientsByCategory: Record<IngredientCategory, string[]> = {
     [IngredientCategory.PROTEIN]: ["Chicken", "Beef", "Tofu", "Fish", "Eggs"],
     [IngredientCategory.CARBOHYDRATES]: ["Rice", "Pasta", "Bread", "Quinoa", "Oats", "Buckwheat"],
-    [IngredientCategory.FATS]: ["Olive Oil", "Avocado", "Coconut Oil", "Sesame Oil", "Walnut", "Almonds", "Pecans", "Hazelnut", "Macadamia nut", "Brazil nut", "white sesame", "Black sesame", "Black cumin seed", "Linen seed", "Chia seeds", "Pine nuts", "Sunflower seeds", "Pumpkin seeds", "Tahini"],
-    [IngredientCategory.VEGETABLES]: ["Tomatoes", "Cucumber", "White onion", "Purple onion", "Garlic", "Bell Peppers", "Carrots", "White cabbage", "Purple cabbage", "Radish", "Spinach", "Broccoli", "Zucchini", "Potato", "Sweet potato", "Beet root", "Chard", "Kolorbi"],
-    [IngredientCategory.FRUITS]: ["Apples", "Bananas", "Berries", "Oranges", "Lemons", "Mango", "Pineapple", "Grapes", "Watermelon", "Melon", "Plum"],
-    [IngredientCategory.Dry_FRUITS]: ["Cranberries", "Dates", "Apricot", "Plum"],
-    [IngredientCategory.DAIRY_PRODUCTS]: ["Milk", "Cheese", "Yogurt", "Cream", "Butter", "Sour Cream"],
-    [IngredientCategory.SPICES_AND_HERBS]: ["Salt", "Pepper", "Basil", "Oregano", "Cumin", "Paprika", "Cinnamon"],
-    [IngredientCategory.SWEETENERS]: ["Sugar", "Honey", "Maple Syrup", "Stevia", "Brown Sugar"],
-    [IngredientCategory.LIQUIDS_AND_ADDITIONAL_INGREDIENTS]: ["Water", "Vegetable stock", "Beef stock", "Fish stock", "Red wine", "White wine", "Vinegar", "Soy Sauce", "Tomato Sauce"]
+    [IngredientCategory.FATS]: ["Olive Oil", "Avocado", "Coconut Oil", "Sesame Oil", "Walnut", "Almonds","Cashew","Pistachio", "Peanut", "Pecans", "Hazelnut", "Macadamia nut", "Brazil nut", "white sesame", "Black sesame", "Black cumin seed", "Linen seed", "Chia seeds", "Pine nuts", "Sunflower seeds", "Pumpkin seeds", "Tahini"],
+    [IngredientCategory.VEGETABLES]: ["Tomatoes", "Cucumber", "White onion", "Purple onion", "Garlic", "Bell Peppers", "Carrots", "White cabbage", "Purple cabbage", "Radish", "Spinach", "Broccoli", "Zucchini", "Cauliflower", "Potato", "Sweet potato", "Beet root", "Chard", "Kohlrabi", "Eggplant"],
+    [IngredientCategory.FRUITS]: ["Apples", "Bananas", "Berries", "Oranges", "Lemons", "Mango", "Pineapple", "Grapes", "Watermelon", "Melon", "Plum", "Peach", "Apricot", "Kiwi", "Papaya", "Pomegranate", "Fig", "Coconut", "Guava", "Passion fruit", "Lychee", "Dragon fruit", "Persimmon", "Tangerine", "Nectarine"],
+    [IngredientCategory.Dry_FRUITS]: ["Cranberries", "Dates", "Apricot", "Plum", "Raisins", "Dried Plums", "Dried Mango", "Dried Banana", "Dried Pineapple", "Dried Coconut"],
+    [IngredientCategory.DAIRY_PRODUCTS]: ["Milk", "White Cheese", "Yogurt", "Cream", "Butter", "Sour Cream", "Cottage Cheese", "Ricotta", "Cream Cheese", "Mozzarella", "Feta", "Parmesan", "Goat Cheese", "Blue Cheese", "Brie", "Camembert", "Cheddar", "Coconut Milk", "Almond Milk", "Soy Milk", "Oat Milk", "Rice Milk"],
+    [IngredientCategory.SPICES_AND_HERBS]: ["Salt", "Black Pepper", "Coriander", "Turmeric", "Ginger", "Thyme", "Rosemary", "Parsley", "Dill", "Mint", "Bay Leaf", "Basil", "Oregano", "Cumin", "Paprika", "Cinnamon"],
+    [IngredientCategory.SWEETENERS]: ["Sugar", "Honey", "Maple Syrup", "Stevia", "Brown Sugar", "Vanilla", "Agave Syrup", "Coconut Sugar"],
+    [IngredientCategory.LIQUIDS_AND_ADDITIONAL_INGREDIENTS]: ["Water", "Vegetable stock", "Beef stock", "Fish stock", "Red wine", "White wine", "Vinegar", "Soy Sauce", "Tomato Sauce", "Mustard", "Ketchup", "Mayonnaise", "Peanut Butter", "Almond Butter", "Rice Vinegar", "Balsamic Vinegar"],
 };
 
 export function WizardForm(): JSX.Element {
-    const { isDarkMode } = useTheme();  // <-- Consume the theme context
-
+    const { isDarkMode } = useTheme();
+    const { t, i18n } = useTranslation(); // Add translation hook
+    
     const [currentStep, setCurrentStep] = useState(1);
     const [sliding, setSliding] = useState(false);
     const [slideDirection, setSlideDirection] = useState("left");
@@ -48,7 +50,7 @@ export function WizardForm(): JSX.Element {
         }, {} as Record<IngredientCategory, string[]>)
     );
 
-    // Add new state for custom ingredients input
+    // Custom ingredients state
     const [customIngredients, setCustomIngredients] = useState<Record<IngredientCategory, string>>(
         Object.values(IngredientCategory).reduce((acc, category) => {
             acc[category as IngredientCategory] = "";
@@ -59,7 +61,7 @@ export function WizardForm(): JSX.Element {
     // Progress calculation
     const progress = (currentStep / 3) * 100;
 
-    // Navigation functions
+    // Navigation functions remain unchanged
     const goToNextStep = () => {
         if (currentStep < 3) {
             setSlideDirection("left");
@@ -82,8 +84,9 @@ export function WizardForm(): JSX.Element {
         }
     };
 
-    // Handle ingredient selection
+    // Other handler functions remain unchanged
     const handleIngredientChange = (category: IngredientCategory, ingredient: string, checked: boolean) => {
+        // Keep existing logic
         if (checked) {
             setSelectedIngredients({
                 ...selectedIngredients,
@@ -97,26 +100,24 @@ export function WizardForm(): JSX.Element {
         }
     };
 
-    // Handle custom ingredient input change
     const handleCustomIngredientChange = (category: IngredientCategory, value: string) => {
+        // Keep existing logic
         setCustomIngredients({
             ...customIngredients,
             [category]: value
         });
     };
     
-    // Handle adding custom ingredient
     const handleAddCustomIngredient = (category: IngredientCategory) => {
+        // Keep existing logic
         const ingredient = customIngredients[category].trim();
         
         if (ingredient && !selectedIngredients[category].includes(ingredient)) {
-            // Add the custom ingredient to selected ingredients
             setSelectedIngredients({
                 ...selectedIngredients,
                 [category]: [...selectedIngredients[category], ingredient]
             });
             
-            // Clear the input field
             setCustomIngredients({
                 ...customIngredients,
                 [category]: ""
@@ -124,35 +125,55 @@ export function WizardForm(): JSX.Element {
         }
     };
 
-    // Handle form submission
     const handleSubmit = () => {
-        // Here you can process the collected data
+        // Keep existing logic
         console.log({
             difficulty,
             timeRange,
             selectedIngredients
         });
-        alert("Form submitted successfully!");
+        alert(t('wizard.form.submitSuccess'));
     };
+
+    // Helper function to translate difficulty levels
+    const getDifficultyLabel = (level: string) => {
+        return t(`wizard.difficultyLevels.${level.toLowerCase().replace(/\s+/g, '_')}`);
+    };
+
+    // Helper function to translate time ranges
+    const getTimeRangeLabel = (range: string) => {
+        return t(`wizard.timeRanges.${range.replace(/\s+/g, '_').replace(/-/g, '_to_')}`);
+    };
+
+    // Helper function to translate ingredient categories
+    const getCategoryLabel = (category: IngredientCategory) => {
+        return t(`wizard.categories.${category}`);
+    };
+
+    // Helper function to translate ingredients
+    const getIngredientLabel = (ingredient: string) => {
+        return t(`wizard.ingredients.${ingredient.toLowerCase().replace(/\s+/g, '_')}`);
+    };
+
     return (
-        <Container className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} WizardForm mt-4 mb-5`}>
+        <Container className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} WizardForm mt-4 mb-5 ${i18n.language === 'he' ? 'rtl' : ''}`}>
             <Row className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} justify-content-center`}>
                 <Col md={8}>
                     <Card className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
                         <Card.Header className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-                            <h3 className="text-center">Recipe Preferences</h3>
+                            <h3 className="text-center">{t('wizard.title')}</h3>
                             <ProgressBar now={progress} className="mt-3" variant="success" />
                             <div className="step-indicator d-flex justify-content-between mt-2">
-                                <span className={currentStep >= 1 ? "active" : ""}>Difficulty</span>
-                                <span className={currentStep >= 2 ? "active" : ""}>Time</span>
-                                <span className={currentStep >= 3 ? "active" : ""}>Ingredients</span>
+                                <span className={currentStep >= 1 ? "active" : ""}>{t('wizard.steps.difficulty')}</span>
+                                <span className={currentStep >= 2 ? "active" : ""}>{t('wizard.steps.time')}</span>
+                                <span className={currentStep >= 3 ? "active" : ""}>{t('wizard.steps.ingredients')}</span>
                             </div>
                         </Card.Header>
                         <Card.Body className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
                             <div className={`step-container ${sliding ? `slide-${slideDirection}` : ""}`}>
                                 {currentStep === 1 && (
                                     <div className="step step-1">
-                                        <h4 className="mb-4">Select Recipe Difficulty Level</h4>
+                                        <h4 className="mb-4">{t('wizard.difficulty.title')}</h4>
                                         <Form>
                                             <Form.Group>
                                                 {["Easy", "Normal", "Hard", "Extremely Hard"].map((level, idx) => (
@@ -161,7 +182,7 @@ export function WizardForm(): JSX.Element {
                                                         type="radio"
                                                         id={`difficulty-${idx}`}
                                                         name="difficulty"
-                                                        label={level}
+                                                        label={getDifficultyLabel(level)}
                                                         value={level}
                                                         checked={difficulty === level}
                                                         onChange={(e) => setDifficulty(e.target.value)}
@@ -175,7 +196,7 @@ export function WizardForm(): JSX.Element {
 
                                 {currentStep === 2 && (
                                     <div className="step step-2">
-                                        <h4 className="mb-4">How Much Time Do You Want to Spend?</h4>
+                                        <h4 className="mb-4">{t('wizard.time.title')}</h4>
                                         <Form className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
                                             <Form.Group>
                                                 {["15-30 min", "30-60 min", "60-180 min", "180+ min"].map((range, idx) => (
@@ -184,7 +205,7 @@ export function WizardForm(): JSX.Element {
                                                         type="radio"
                                                         id={`time-${idx}`}
                                                         name="timeRange"
-                                                        label={range}
+                                                        label={getTimeRangeLabel(range)}
                                                         value={range}
                                                         checked={timeRange === range}
                                                         onChange={(e) => setTimeRange(e.target.value)}
@@ -198,17 +219,18 @@ export function WizardForm(): JSX.Element {
 
                                 {currentStep === 3 && (
                                     <div className="step step-3">
-                                        <h4 className="mb-4">Select Your Ingredients</h4>
+                                        <h4 className="mb-4">{t('wizard.ingredients.title')}</h4>
 
                                         <div className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} ingredients-selection`}>
                                             {Object.values(IngredientCategory).map((category) => (
                                                 <Card key={category} className="mb-3">
-                                                    <Card.Header className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} ingredients-selection`}>{category}</Card.Header>
+                                                    <Card.Header className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} ingredients-selection`}>
+                                                        {getCategoryLabel(category as IngredientCategory)}
+                                                    </Card.Header>
                                                     <Card.Body className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-                                                        {/* Add custom ingredient input */}
                                                         <InputGroup className="mb-3">
                                                             <Form.Control
-                                                                placeholder="Add your own ingredient..."
+                                                                placeholder={t('wizard.ingredients.addCustomPlaceholder')}
                                                                 value={customIngredients[category as IngredientCategory]}
                                                                 onChange={(e) => handleCustomIngredientChange(category as IngredientCategory, e.target.value)}
                                                                 onKeyPress={(e) => {
@@ -223,7 +245,7 @@ export function WizardForm(): JSX.Element {
                                                                 variant="outline-success"
                                                                 onClick={() => handleAddCustomIngredient(category as IngredientCategory)}
                                                             >
-                                                                Add
+                                                                {t('wizard.buttons.add')}
                                                             </Button>
                                                         </InputGroup>
 
@@ -233,7 +255,7 @@ export function WizardForm(): JSX.Element {
                                                                     <Form.Check
                                                                         type="checkbox"
                                                                         id={`${category}-${idx}`}
-                                                                        label={ingredient}
+                                                                        label={getIngredientLabel(ingredient)}
                                                                         checked={selectedIngredients[category as IngredientCategory]?.includes(ingredient)}
                                                                         onChange={(e) => handleIngredientChange(
                                                                             category as IngredientCategory,
@@ -250,7 +272,7 @@ export function WizardForm(): JSX.Element {
                                         </div>
 
                                         <div className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} selected-ingredients mt-4`}>
-                                            <h5>Selected Ingredients:</h5>
+                                            <h5>{t('wizard.ingredients.selected')}</h5>
                                             <div className="d-flex flex-wrap">
                                                 {Object.entries(selectedIngredients).flatMap(([category, ingredients]) =>
                                                     ingredients.map((ingredient, idx) => (
@@ -259,12 +281,12 @@ export function WizardForm(): JSX.Element {
                                                             key={`${category}-${idx}`}
                                                             className="m-1 p-2"
                                                         >
-                                                            {ingredient}
+                                                            {getIngredientLabel(ingredient)}
                                                         </Badge>
                                                     ))
                                                 )}
                                                 {Object.values(selectedIngredients).every(arr => arr.length === 0) && (
-                                                    <p className="text-muted">No ingredients selected yet</p>
+                                                    <p className="text-muted">{t('wizard.ingredients.noSelection')}</p>
                                                 )}
                                             </div>
                                         </div>
@@ -279,7 +301,7 @@ export function WizardForm(): JSX.Element {
                                     onClick={goToPrevStep}
                                     disabled={currentStep === 1}
                                 >
-                                    Back
+                                    {t('wizard.buttons.back')}
                                 </Button>
 
                                 {currentStep < 3 ? (
@@ -291,14 +313,14 @@ export function WizardForm(): JSX.Element {
                                             (currentStep === 2 && !timeRange)
                                         }
                                     >
-                                        Next
+                                        {t('wizard.buttons.next')}
                                     </Button>
                                 ) : (
                                     <Button
                                         variant="success"
                                         onClick={handleSubmit}
                                     >
-                                        Submit
+                                        {t('wizard.buttons.submit')}
                                     </Button>
                                 )}
                             </div>
