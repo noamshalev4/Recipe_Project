@@ -72,7 +72,16 @@ export function MyFooter(): JSX.Element {
           </Col>
         </Row>
 
-        {/* Second Row: Centered Social Icons and Back to Top Icon */}
+        {/* New Row: Inclusivity Message */}
+        <Row className="pb-3">
+          <Col className="d-flex justify-content-center">
+            <p className="small text-muted inclusivity-note">
+              {t('footer.inclusivityNote')}
+            </p>
+          </Col>
+        </Row>
+
+        {/* Social Icons and Back to Top Icon */}
         <Row className="py-2">
           <Col className="d-flex justify-content-center align-items-center">
             <div className="social-links">

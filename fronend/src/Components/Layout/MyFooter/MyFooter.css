@@ -68,4 +68,20 @@ footer.bg-dark {
   footer.text-dark {
     color: #212529;  /* Dark text color */
   }
+
+  .inclusivity-note {
+    font-size: 0.9rem;
+    max-width: 700px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+  
+  /* Adjust text color based on theme */
+  .bg-dark .inclusivity-note {
+    color: #b0b0b0 !important;
+  }
+  
+  .bg-light .inclusivity-note {
+    color: #6c757d !important;
+  }
   

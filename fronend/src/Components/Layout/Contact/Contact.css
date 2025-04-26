@@ -1,4 +1,4 @@
-.contact-page {
+.language-contact-page {
     min-height: 100vh;
     transition: all 0.3s ease;
   }
@@ -88,3 +88,142 @@
   .dark-mode .form-control::placeholder {
     color: #a0aec0;
   }
+
+  /* RTL Support */
+.language-contact-page.rtl {
+  direction: rtl;
+}
+
+.language-contact-page.rtl .form-label {
+  text-align: right;
+}
+
+.language-contact-page.rtl .form-control {
+  text-align: right;
+}
+
+/* Fix spacing for RTL layout */
+.language-contact-page.rtl .icon-container {
+  margin-left: 0;
+}
+
+/* Adjust focus styles for RTL */
+.language-contact-page.rtl .form-control:focus {
+  box-shadow: -0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Social links positioning */
+.language-contact-page.rtl .social-link {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+/* RTL Support */
+.language-contact-page.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.language-contact-page .form-label {
+  display: block;
+}
+
+.language-contact-page.rtl .form-control {
+  text-align: right;
+}
+
+/* Social icons container */
+.social-icons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* RTL social icons alignment */
+.rtl-social-icons {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* Social link styling */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-dark {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.social-light {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+}
+
+.social-dark:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.social-light:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Icon container styling */
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.icon-dark {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.icon-light {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+/* Fix for RTL form controls */
+.language-contact-page.rtl .form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Add or update these rules */
+
+/* Social icons container */
+.social-icons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* RTL specific styling for social icons */
+.rtl-social-icons {
+  display: flex !important;
+  flex-direction: row-reverse !important;
+  justify-content: flex-start !important;
+}
+
+/* Override margin for social links in RTL */
+.contact-page.rtl .social-link {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+.chef-highlight {
+  font-weight: bold;
+  font-size: 1.2rem; /* או 1.25rem, תלוי בכמה גודל אתה רוצה */
+}

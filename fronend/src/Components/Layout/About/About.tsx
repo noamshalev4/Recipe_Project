@@ -5,16 +5,18 @@ import { ThemeContext } from '../../../Context/ThemeContext/ThemeContext';
 import { motion } from 'framer-motion';
 import { GiCook, GiCookingPot, GiNotebook } from 'react-icons/gi';
 import { FaHeart } from 'react-icons/fa';
-import chefImage from '../../../assets/chef_figure2.png'; // Make sure to use the correct path
+import chefImage from '../../../assets/chef_figure2.png'; // Used for English
+import chefImage2 from '../../../assets/chef_figure3.png'; // Used for Hebrew
 import './About.css';
 
 export function About(): React.JSX.Element {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isDarkMode } = useContext(ThemeContext)!;
+  const isRTL = i18n.language === 'he';
 
   useEffect(() => {
-    document.title = 'About Us - Reciply';
-  }, []);
+    document.title = t('language-about.pageTitle');
+  }, [t]);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -28,20 +30,20 @@ export function About(): React.JSX.Element {
   };
 
   return (
-    <div className={`about-page ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+    <div className={`about-page ${isDarkMode ? 'dark-mode' : 'light-mode'} ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="chef-banner">
         <Container>
           <Row className="px-5 align-items-center">
-            <Col md={6} className="text-center text-md-start">
+            <Col md={6} className={`text-center ${isRTL ? 'text-md-end' : 'text-md-start'}`}>
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={fadeIn}
                 className="mb-4"
               >
-                <h1 className="display-4 fw-bold">About Reciply</h1>
+                <h1 className="display-4 fw-bold">{t('language-about.title')}</h1>
                 <p className="lead mt-3">
-                  Where culinary inspiration meets practical guidance
+                  {t('language-about.subtitle')}
                 </p>
               </motion.div>
             </Col>
@@ -53,8 +55,8 @@ export function About(): React.JSX.Element {
                 className="chef-image-container"
               >
                 <img
-                  src={chefImage}
-                  alt="Chef Mascot"
+                  src={isRTL ? chefImage2 : chefImage}
+                  alt={t('language-about.chefImageAlt')}
                   className="chef-image img-fluid"
                 />
               </motion.div>
@@ -74,18 +76,24 @@ export function About(): React.JSX.Element {
             >
               <Card className={`border-0 shadow-sm ${isDarkMode ? 'bg-dark text-light' : 'bg-light'}`}>
                 <Card.Body className="p-4 p-md-5">
-                  <h2 className="mb-4">Our Story</h2>
+                  <h2 className="mb-4">{t('language-about.ourStory.title')}</h2>
                   <p className="chef-story">
-                    Hello there! I'm Noam Shalev, a passionate sous-chef with years of experience in professional kitchens. Throughout my culinary journey, I've witnessed firsthand the transformative power of home cooking—and the frustration that can come with it.
+                    {t('language-about.ourStory.paragraph1')}
                   </p>
                   <p className="chef-story">
-                    Like many culinary professionals, I remember the early days of my career when creating even simple dishes seemed daunting. That feeling of standing in the kitchen, ingredients at hand, but unsure how to proceed—it's a universal experience that connects home cooks everywhere.
+                    {t('language-about.ourStory.paragraph2')}
                   </p>
                   <p className="chef-story">
-                    This is why I created Reciply. I wanted to bridge the gap between having ingredients and enjoying a delicious home-cooked meal. This platform is designed to eliminate the guesswork from cooking by providing personalized recipe recommendations based on what's already in your kitchen, your available time, and your skill level.
+                    {t('language-about.ourStory.paragraph3')}
                   </p>
                   <p className="chef-story">
-                    At Reciply, we believe that the most satisfying culinary experiences come from creative exploration. Our step-by-step guidance empowers you to experiment with confidence, transforming everyday ingredients into extraordinary meals. Because in the end, the best dishes come from that playful, adventurous spirit in the kitchen.
+                    {t('language-about.ourStory.paragraph4')}
+                    <p className="chef-story">
+                      {t('language-about.ourStory.paragraph4')}
+                    </p>
+                    <p className="chef-story chef-motto chef-highlight">
+                      {t('language-about.ourStory.paragraph5')}
+                    </p>
                   </p>
                 </Card.Body>
               </Card>
@@ -101,7 +109,7 @@ export function About(): React.JSX.Element {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-center mb-4">How Reciply Works</h2>
+              <h2 className="text-center mb-4">{t('language-about.howItWorks.title')}</h2>
             </motion.div>
           </Col>
           <Col md={4} className="mb-4">
@@ -116,9 +124,9 @@ export function About(): React.JSX.Element {
                   <div className={`icon-container mb-3 ${isDarkMode ? 'icon-dark' : 'icon-light'}`}>
                     <GiCook size={50} />
                   </div>
-                  <h3 className="h4">Input Your Ingredients</h3>
+                  <h3 className="h4">{t('language-about.howItWorks.step1.title')}</h3>
                   <p>
-                    Tell us what ingredients you have on hand in your kitchen pantry.
+                    {t('language-about.howItWorks.step1.description')}
                   </p>
                 </Card.Body>
               </Card>
@@ -136,9 +144,9 @@ export function About(): React.JSX.Element {
                   <div className={`icon-container mb-3 ${isDarkMode ? 'icon-dark' : 'icon-light'}`}>
                     <GiCookingPot size={50} />
                   </div>
-                  <h3 className="h4">Set Your Parameters</h3>
+                  <h3 className="h4">{t('language-about.howItWorks.step2.title')}</h3>
                   <p>
-                    Specify how much time you have and your preferred difficulty level.
+                    {t('language-about.howItWorks.step2.description')}
                   </p>
                 </Card.Body>
               </Card>
@@ -156,9 +164,9 @@ export function About(): React.JSX.Element {
                   <div className={`icon-container mb-3 ${isDarkMode ? 'icon-dark' : 'icon-light'}`}>
                     <GiNotebook size={50} />
                   </div>
-                  <h3 className="h4">Discover Recipes</h3>
+                  <h3 className="h4">{t('language-about.howItWorks.step3.title')}</h3>
                   <p>
-                    Get personalized recipe suggestions that match your criteria with step-by-step instructions.
+                    {t('language-about.howItWorks.step3.description')}
                   </p>
                 </Card.Body>
               </Card>

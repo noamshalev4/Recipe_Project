@@ -97,3 +97,17 @@
         font-size: 26px;
     }
 }
+
+/* RTL Support */
+.NotFound404.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.NotFound404.rtl .transparent-container {
+    text-align: center;
+}
+
+.NotFound404.rtl .home-button {
+    font-family: 'Rubik', sans-serif;
+}

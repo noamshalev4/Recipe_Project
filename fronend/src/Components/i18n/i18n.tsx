@@ -27,7 +27,8 @@ const resources = {
           "whatsapp": "Contact us on WhatsApp",
           "instagram": "Follow us on Instagram",
           "email": "Email us"
-        }
+        },
+        "inclusivityNote": "We used masculine language for convenience, but all the recipes, inspiration, and tips here are for everyone 😊"
       },
       "theme": {
         "darkMode": "Switch to Dark Mode",
@@ -42,6 +43,45 @@ const resources = {
         "message": "We couldn't find the page you were looking for. Maybe it got too spicy and ran off?",
         "button": "Back to Home Kitchen",
         "humor": "Even the best chefs burn a few pages now and then!"
+      },
+      // NEW: Move contact to the root level
+      "language-contact": {
+        "pageTitle": "Contact Us - Reciply",
+        "title": "Get in Touch",
+        "subtitle": "Have a question about a recipe? Want to share your culinary success story? We'd love to hear from you!",
+        "form": {
+          "title": "Send Us a Message",
+          "name": "Name",
+          "namePlaceholder": "Your name",
+          "email": "Email",
+          "emailPlaceholder": "your@email.com",
+          "subject": "Subject",
+          "subjectPlaceholder": "What's this about?",
+          "message": "Message",
+          "messagePlaceholder": "Your message",
+          "submit": "Send Message",
+          "submitSuccess": "Your message has been sent successfully! We'll get back to you soon."
+        },
+        "info": {
+          "title": "Contact Information",
+          "email": {
+            "label": "Email"
+          },
+          "phone": {
+            "label": "Phone",
+            "value": "+972 050-1234567"
+          },
+          "office": {
+            "label": "Office",
+            "line1": "123 Culinary Street",
+            "line2": "Foodie City, FC 12345"
+          }
+        },
+        "social": {
+          "title": "Follow Us",
+          "instagram": "Follow us on Instagram",
+          "facebook": "Like us on Facebook"
+        }
       },
       "wizard": {
         "title": "Recipe Preferences",
@@ -223,7 +263,7 @@ const resources = {
           "almond_butter": "Almond Butter",
           "rice_vinegar": "Rice Vinegar",
           "balsamic_vinegar": "Balsamic Vinegar",
-          "apple_cider_vinegar": "Apple Cider Vinegar",
+          "apple_cider_vinegar": "Apple Cider Vinegar"
         },
         "categories": {
           "Protein": "Protein",
@@ -251,6 +291,44 @@ const resources = {
           "next": "Next",
           "submit": "Submit"
         }
+        // Removed contact from here
+      },
+      "language-about": {
+        "pageTitle": "About Us - Reciply",
+        "title": "About Reciply",
+        "subtitle": "Where culinary inspiration meets practical guidance",
+        "chefImageAlt": "Chef Mascot",
+        "ourStory": {
+          "title": "Our Story",
+          "paragraph1": "Hello there! I'm Noam Shalev, a passionate sous-chef with years of experience in professional kitchens. Throughout my culinary journey, I've witnessed firsthand the transformative power of home cooking—and the frustration that can come with it.",
+          "paragraph2": "Like many culinary professionals, I remember the early days of my career when creating even simple dishes seemed daunting. That feeling of standing in the kitchen, ingredients at hand, but unsure how to proceed—it's a universal experience that connects home cooks everywhere.",
+          "paragraph3": "This is why I created Reciply. I wanted to bridge the gap between having ingredients and enjoying a delicious home-cooked meal. This platform is designed to eliminate the guesswork from cooking by providing personalized recipe recommendations based on what's already in your kitchen, your available time, and your skill level.",
+          "paragraph4": "At Reciply, we believe that the most satisfying culinary experiences come from creative exploration. Our step-by-step guidance empowers you to experiment with confidence, transforming everyday ingredients into extraordinary meals. Because in the end, the best dishes come from that playful, adventurous spirit in the kitchen.",
+          "paragraph5": ""
+        },
+        "howItWorks": {
+          "title": "How Reciply Works",
+          "step1": {
+            "title": "Input Your Ingredients",
+            "description": "Tell us what ingredients you have on hand in your kitchen pantry."
+          },
+          "step2": {
+            "title": "Set Your Parameters",
+            "description": "Specify how much time you have and your preferred difficulty level."
+          },
+          "step3": {
+            "title": "Discover Recipes",
+            "description": "Get personalized recipe suggestions that match your criteria with step-by-step instructions."
+          }
+        },
+        "notFound": {
+          "pageTitle": "Page Not Found - Reciply",
+          "imageAlt": "Page not found background",
+          "title": "Oops! This recipe is still in the oven...",
+          "message": "We couldn't find the page you were looking for. Maybe it got too spicy and ran off?",
+          "button": "Back to Home Kitchen",
+          "humor": "Even the best chefs burn a few pages now and then!"
+        },
       }
     }
   },
@@ -268,7 +346,7 @@ const resources = {
         "wizardForm": "אשף המתכונים"
       },
       "button": {
-        "start": "בואו נתחיל!"
+        "start": "! בואו נתחיל"
       },
       "footer": {
         "ourMission": "המשימה שלנו",
@@ -280,7 +358,8 @@ const resources = {
           "whatsapp": "צור קשר בוואטסאפ",
           "instagram": "עקוב אחרינו באינסטגרם",
           "email": "שלח לנו אימייל"
-        }
+        },
+        "inclusivityNote": "השתמשנו בלשון זכר לנוחות, אבל כל המתכונים, ההשראה והטיפים כאן מיועדים לכולם ולכולן 😊"
       },
       "theme": {
         "darkMode": "עבור למצב כהה",
@@ -296,12 +375,51 @@ const resources = {
         "button": "חזרה למטבח הביתי",
         "humor": "גם לשפים הטובים ביותר נשרפים כמה דפים מדי פעם!"
       },
+      // NEW: Move contact to the root level
+      "language-contact": {
+        "pageTitle": "צור קשר - Reciply",
+        "title": "צור קשר",
+        "subtitle": "יש לך שאלה לגבי מתכון? רוצה לשתף סיפור הצלחה קולינרי? נשמח לשמוע ממך!",
+        "form": {
+          "title": "שלח לנו הודעה",
+          "name": "שם",
+          "namePlaceholder": "השם שלך",
+          "email": "אימייל",
+          "emailPlaceholder": "המייל שלך",
+          "subject": "נושא",
+          "subjectPlaceholder": "?במה מדובר",
+          "message": "הודעה",
+          "messagePlaceholder": "ההודעה שלך",
+          "submit": "שלח הודעה",
+          "submitSuccess": "ההודעה שלך נשלחה בהצלחה! נחזור אליך בהקדם."
+        },
+        "info": {
+          "title": "פרטי יצירת קשר",
+          "email": {
+            "label": "אימייל"
+          },
+          "phone": {
+            "label": "טלפון",
+            "value": "+972 050-1234567"
+          },
+          "office": {
+            "label": "משרד",
+            "line1": "הרחוב הקולינרי 123",
+            "line2": "עיר האוכל, 12345"
+          }
+        },
+        "social": {
+          "title": "עקבו אחרינו",
+          "instagram": "עקבו אחרינו באינסטגרם",
+          "facebook": "לייק בפייסבוק"
+        }
+      },
       "wizard": {
         "title": "העדפות מתכון",
         "steps": {
           "difficulty": "רמת קושי",
           "time": "זמן",
-          "ingredients": "מרכיבים"
+          "ingredients": "חומרי גלם"
         },
         "difficulty": {
           "title": "בחר רמת קושי למתכון"
@@ -322,10 +440,10 @@ const resources = {
           "180+_min": "180+ דקות"
         },
         "ingredients": {
-          "title": "בחר את המרכיבים שלך",
-          "selected": "מרכיבים שנבחרו:",
-          "noSelection": "עדיין לא נבחרו מרכיבים",
-          "addCustomPlaceholder": "הוסף מרכיב משלך...",
+          "title": "בחר את חומרי הגלם שלך",
+          "selected": "חומרי הגלם שנבחרו:",
+          "noSelection": "עדיין לא נבחרו חומרי גלם",
+          "addCustomPlaceholder": "הוסף חומר גלם משלך...",
           "chicken": "עוף",
           "beef": "בקר",
           "tofu": "טופו",
@@ -404,7 +522,7 @@ const resources = {
           "persimmon": "אפרסמון",
           "tangerine": "מנדרינה",
           "nectarine": "נקטרינה",
-          "dry_apricots": "Dried Apricots",
+          "dry_apricots": "משמשים מיובשים",
           "dates": "תמרים",
           "cranberries": "חמוציות",
           "dried_figs": "תאנים מיובשות",
@@ -443,7 +561,7 @@ const resources = {
           "turmeric": "כורכום",
           "paprika": "פפריקה",
           "cinnamon": "קינמון",
-          "ginger": "ג'ינגר'",
+          "ginger": "ג'ינג'ר",
           "basil": "בזיליקום",
           "oregano": "אורגנו",
           "thyme": "טימין",
@@ -476,11 +594,12 @@ const resources = {
           "almond_butter": "חמאת שקדים",
           "rice_vinegar": "חומץ אורז",
           "balsamic_vinegar": "חומץ בלסמי",
+          "apple_cider_vinegar": "חומץ תפוחים"
         },
         "categories": {
           "Protein": "חלבון",
           "Carbohydrates": "פחמימות",
-          "Fats": "שומנים",
+          "Fats": "שומן",
           "Vegetables": "ירקות",
           "Fruits": "פירות",
           "Dry fruits": "פירות יבשים",
@@ -502,6 +621,44 @@ const resources = {
           "back": "חזור",
           "next": "הבא",
           "submit": "שלח"
+        }
+        // Removed contact from here
+      },
+      "language-about": {
+        "pageTitle": "אודות - Reciply",
+        "title": "אודות Reciply",
+        "subtitle": "מהשראה למנה מושלמת – הבישול המקצועי מתחיל כאן",
+        "chefImageAlt": "שף מסקוט",
+        "ourStory": {
+          "title": "הסיפור שלנו",
+          "paragraph1": "שלום! אני נועם שלו, סו-שף עם שנים של ניסיון במטבחים מקצועיים. לאורך המסע הקולינרי שלי, ראיתי מקרוב איך בישול ביתי יכול לשנות חיים. וכמה תסכול הוא לפעמים מביא איתו.",
+          "paragraph2": "כמו רבים בעולם המטבח, אני זוכר היטב את הימים הראשונים בקריירה שלי, כשגם הכנת מנות פשוטות הרגישה כמו משימה בלתי אפשרית. לעמוד במטבח, עם חומרי הגלם מול העיניים, אבל בלי לדעת איך להתחיל – זו חוויה משותפת לכל מי שמבשל באהבה.",
+          "paragraph3": "מתוך ההבנה הזו נולד Reciply. רציתי לסגור את הפער שבין מה שיש במטבח לבין ארוחה ביתית טעימה. יצרנו פלטפורמה שמסירה את חוסר הוודאות מהתהליך, ומציעה לכם מתכונים מותאמים אישית – לפי מה שיש לכם בבית, הזמן הפנוי שלכם, ורמת הניסיון שלכם בבישול.",
+          "paragraph4": "ב-Reciply אנחנו מאמינים שהחוויה הקולינרית הכי טובה מגיעה מתוך יצירתיות והנאה. עם הנחיות מדויקות וצעדים ברורים, נעניק לכם את הביטחון להשתעשע, לנסות, ולגלות איך גם החומרים הכי פשוטים יכולים להפוך לארוחה יוצאת דופן.",
+          "paragraph5": "כי אצלנו, כל מצרך הוא הזדמנות – וכל ארוחה היא יצירה."
+        },
+        "howItWorks": {
+          "title": "איך Reciply עובד",
+          "step1": {
+            "title": "הכנס את חומרי הגלם שלך",
+            "description": "ספר לנו אילו חומרי גלם יש לך בהישג יד במזווה המטבח שלך."
+          },
+          "step2": {
+            "title": "זמן לקצת הגדרות",
+            "description": "ציין כמה זמן יש לך ומה רמת הקושי המועדפת עליך."
+          },
+          "step3": {
+            "title": "גלה מתכונים",
+            "description": "קבל הצעות מתכונים מותאמות אישית שמתאימות לקריטריונים שלך עם הוראות צעד אחר צעד."
+          }
+        },
+        "notFound": {
+          "pageTitle": "דף לא נמצא - Reciply",
+          "imageAlt": "תמונת רקע לדף שלא נמצא",
+          "title": "אופס! המתכון הזה עדיין בתנור...",
+          "message": "לא הצלחנו למצוא את הדף שחיפשת. אולי הוא נהיה חריף מדי וברח?",
+          "button": "חזרה למטבח הביתי",
+          "humor": "גם לשפים הטובים ביותר נשרפים כמה דפים מדי פעם!"
         }
       }
     }

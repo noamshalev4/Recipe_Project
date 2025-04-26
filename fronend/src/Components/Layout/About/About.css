@@ -1,97 +1,32 @@
-.about-page {
-  transition: all 0.3s ease;
+/* RTL support */
+.about-page.rtl {
+  direction: rtl;
+  text-align: right;
 }
 
-.dark-mode {
-  background-color: #222;
-  color: #f8f9fa;
+.about-page.rtl .card-body {
+  text-align: right;
 }
 
-.light-mode {
-  background-color: #f8f9fa;
-  color: #333;
+.about-page.rtl .text-center {
+  text-align: center !important;
 }
 
-.chef-banner {
-  padding: 5rem 0 3rem;
-  position: relative;
-  overflow: hidden;
+.about-page.rtl .text-md-end {
+  text-align: left !important;
 }
 
-.dark-mode .chef-banner {
-  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
-}
-
-.light-mode .chef-banner {
-  background: linear-gradient(135deg, #f7f0eb 0%, #e2d1c3 100%);
-}
-
-.chef-image {
-  max-height: 350px;
-  transition: transform 0.5s ease;
-}
-
-.chef-image:hover {
-  transform: scale(1.05);
-}
-
-.chef-story {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-
-.icon-container {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
-}
-
-.icon-light {
-  background-color: rgba(58, 133, 219, 0.1);
-  color: #2C71C1;
-}
-
-.icon-dark {
-  background-color: rgba(58, 133, 219, 0.2);
-  color: #5594e2;
-}
-
-.mission-statement {
-  border-left: 5px solid #2C71C1;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  transition: all 0.3s ease;
-}
-
-.dark-mode .card {
-  border: none;
-}
-
-.dark-mode .bg-dark-subtle {
-  background-color: #2d3748 !important;
-}
-
-.light-mode .bg-light-subtle {
-  background-color: #f0f4f8 !important;
-}
-
-@media (max-width: 768px) {
-  .chef-banner {
-    padding: 3rem 0 2rem;
+@media (min-width: 768px) {
+  .about-page.rtl .text-md-end {
+    text-align: right !important;
   }
-  
-  .chef-image {
-    max-height: 250px;
-    margin-top: 2rem;
-  }
-  
-  .chef-story {
-    font-size: 1rem;
-  }
+}
+
+.about-page.rtl .chef-image-container {
+  direction: ltr; /* Keep image direction */
+}
+
+.chef-motto {
+  font-weight: bold;
+  font-size: 1.2em;
 }
