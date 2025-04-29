@@ -151,9 +151,30 @@ export function WizardForm(): JSX.Element {
     };
 
     // Helper function to translate ingredients
-    const getIngredientLabel = (ingredient: string) => {
-        return t(`wizard.ingredients.${ingredient.toLowerCase().replace(/\s+/g, '_')}`);
-    };
+    // const getIngredientLabel = (ingredient: string) => {
+    //     return t(`wizard.ingredients.${ingredient.toLowerCase().replace(/\s+/g, '_')}`);
+    // };
+
+    // Helper function to translate ingredients with fallback for custom ingredients
+const getIngredientLabel = (ingredient: string) => {
+    const translationKey = `wizard.ingredients.${ingredient.toLowerCase().replace(/\s+/g, '_')}`;
+    
+    // Use i18next's exists method if available
+    if (i18n.exists && typeof i18n.exists === 'function') {
+        if (!i18n.exists(translationKey)) {
+            return ingredient; // Return original text for custom ingredients
+        }
+    } else {
+        // Fallback check: if translation equals the key, it means no translation was found
+        const translation = t(translationKey);
+        if (translation === translationKey) {
+            return ingredient;
+        }
+        return translation;
+    }
+    
+    return t(translationKey);
+};
 
     return (
         <Container className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} WizardForm mt-4 mb-5 ${i18n.language === 'he' ? 'rtl' : ''}`}>

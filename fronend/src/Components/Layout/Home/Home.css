@@ -1,8 +1,6 @@
-.Home {
-	
-}
+.Home {}
 
-.Background{
+.Background {
    background-image: url("../../../assets/kitchen_background.png");
    background-size: cover;
    background-position: center;
@@ -24,4 +22,41 @@
    cursor: pointer; */
 }
 
+/* Add these styles to your Home.css file */
+.image-container {
+   position: relative;
+   width: 100%;
+   max-width: 1200px;
+   margin: 0 auto;
+}
 
+.text-overlay {
+   transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+   .text-overlay {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      margin: 20px auto !important;
+      max-width: 90% !important;
+   }
+}
+
+/* Fix for small screens in RTL mode */
+.rtl .text-overlay {
+   direction: rtl;
+}
+
+/* Style adjustments for dark mode */
+.dark-mode .text-overlay {
+   background-color: rgba(33, 37, 41, 0.8) !important;
+   color: #f8f9fa !important;
+}
+
+.dark-mode .text-overlay h2 {
+   color: #5594e2 !important;
+}

@@ -1,6 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+// Get saved language from localStorage or default to 'en'
+const savedLanguage = localStorage.getItem('language') || 'en';
+
 const resources = {
   en: {
     translation: {
@@ -667,11 +670,18 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en', // default language
+  lng: savedLanguage, // Use the saved language instead of hardcoded 'en'
   fallbackLng: 'en',
   interpolation: {
-    escapeValue: false, // not needed for React as it escapes by default
+    escapeValue: false,
   },
+});
+
+// Add a language change listener to save the language choice
+i18n.on('languageChanged', (lng) => {
+  localStorage.setItem('language', lng);
+  // Update document direction based on language
+  document.dir = lng === 'he' ? 'rtl' : 'ltr';
 });
 
 export default i18n;

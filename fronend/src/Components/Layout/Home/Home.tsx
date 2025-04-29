@@ -17,6 +17,22 @@ export function Home(): JSX.Element | null {
         setIsMounted(true);
     }, []);
 
+    useEffect(() => {
+        // Set initial direction
+        document.dir = i18n.language === 'he' ? 'rtl' : 'ltr';
+
+        // Add listener for language changes
+        const handleLanguageChange = (lng: string) => {
+            document.dir = lng === 'he' ? 'rtl' : 'ltr';
+        };
+
+        i18n.on('languageChanged', handleLanguageChange);
+
+        return () => {
+            i18n.off('languageChanged', handleLanguageChange);
+        };
+    }, []);
+
     const logo = logoHebrew;
 
     if (!isMounted) return null;
@@ -43,6 +59,59 @@ export function Home(): JSX.Element | null {
                             position: 'relative',
                         }}
                     />
+
+                    <div
+                        className="text-overlay"
+                        style={{
+                            position: 'absolute',
+                            top: '11%',
+                            left: '30.3%', // Fixed position for both languages
+                            width: '361px', // 9.5cm converted to pixels
+                            height: '260px', // 7.5cm converted to pixels
+                            textAlign: i18n.language === 'he' ? 'right' : 'left',
+                            color: isDarkMode ? '#f8f9fa' : '#333',
+                            backgroundColor: 'transparent', // Fully transparent background
+                            overflow: 'auto', // Allow scrolling if content overflows
+                            padding: '0', // Remove padding to maximize space
+                            zIndex: 2,
+                            borderRadius: '10px',
+                        }}
+                    >
+                        <h2 className="mb-2" style={{
+                            fontWeight: 'bold',
+                            fontSize: 'clamp(1rem, 2vw, 1.2rem)', // Smaller font size
+                            color: isDarkMode ? '#5594e2' : '#2C71C1'
+                        }}>
+                            {i18n.language === 'he'
+                                ? <>ברוכים הבאים ל־<span style={{ fontFamily: '"Arial", sans-serif' }}>Reciply</span> – המקום שבו הרעב פוגש יצירתיות!</>
+                                : <>Welcome to Reciply – where hunger meets creativity!</>
+                            }
+                        </h2>
+                        <p style={{
+                            fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)', // Smaller font size
+                            lineHeight: '1.4',
+                            textAlign: i18n.language === 'he' ? 'right' : 'left',
+                            margin: 0,
+                            color: '#333',
+                        }}>
+                            {i18n.language === 'he'
+                                ? <>
+                                    בין אם אתם סטודנטים, פרילנסרים, או פשוט כאלה שהמקרר שלהם נראה כמו תערוכת אמנות מינימליסטית – האתר הזה בשבילכם.<br />
+                                    כאן תמצאו מתכונים טעימים ופשוטים, עם מה שכבר יש לכם בבית.<br />
+                                    לא צריך להיות שף, ולא צריך רשימת קניות <br /><span style={{ fontFamily: '"Arial", sans-serif' }}>שגדולה מה - To Do List שלכם</span> – פשוט תבחרו מה שיש, ואנחנו נטפל בשאר.<br />
+                                    המתכונים מותאמים לחיים האמיתיים: מהירים, חכמים, וידידותיים לתקציב.<br />
+                                    אז קדימה – הכניסו את המרכיבים שיש לכם בבית, ו־<span style={{ fontFamily: '"Arial", sans-serif' }}>Reciply</span> תפתיע אתכם עם משהו טעים במיוחד.
+                                </>
+                                : <>
+                                    Whether you're a student, a freelancer, or just someone whose fridge looks like a minimalist art exhibit – this site is for you.<br />
+                                    Here, you'll find tasty and simple recipes using only what you already have at home.<br />
+                                    No need to be a chef, and no need for a shopping list longer than your To-Do List – just pick what you've got, and we'll take it from there.<br />
+                                    Our recipes are made for real life: quick, clever, and budget-friendly.<br />
+                                    So go ahead – enter the ingredients you've got lying around, and let Reciply surprise you with something delicious.
+                                </>
+                            }
+                        </p>
+                    </div>
                 </div>
 
                 {/* Button centered with the image */}
