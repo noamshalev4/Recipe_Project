@@ -349,7 +349,7 @@ const resources = {
         "wizardForm": "אשף המתכונים"
       },
       "button": {
-        "start": "! בואו נתחיל"
+        "start": " בואו נתחיל!"
       },
       "footer": {
         "ourMission": "המשימה שלנו",
