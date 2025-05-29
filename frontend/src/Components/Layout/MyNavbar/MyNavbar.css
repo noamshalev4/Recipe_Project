@@ -1,0 +1,171 @@
+/* Container layout */
+.navbar .container,
+.navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Flex layout for LTR and RTL */
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-row-reverse {
+    flex-direction: row-reverse;
+}
+
+/* Make navbar components take appropriate space */
+.navbar-brand-container,
+.controls-container {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.navbar-collapse {
+    flex: 1 0 auto;
+}
+
+/* Ensure text alignment for RTL */
+[dir="rtl"] .navbar-nav .nav-link {
+    text-align: right;
+}
+
+/* Position toggle button appropriately */
+.navbar-toggler-ltr {
+    margin-left: 0;
+    margin-right: auto;
+    order: 1;
+}
+
+.navbar-toggler-rtl {
+    margin-right: 0;
+    margin-left: auto;
+    order: 1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: inherit;
+        z-index: 1000;
+        padding: 1rem;
+        border-radius: 0 0 0.25rem 0.25rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    [dir="rtl"] .navbar .container,
+    [dir="rtl"] .navbar .container-fluid {
+        flex-direction: row-reverse;
+    }
+
+    .navbar-collapse .navbar-nav {
+        width: 100%;
+    }
+
+    .controls-container {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Fix icon margin direction for RTL */
+[dir="rtl"] .me-1 {
+    margin-right: 0.25rem !important;
+    margin-left: 0 !important;
+}
+
+[dir="rtl"] .ms-1 {
+    margin-left: 0.25rem !important;
+    margin-right: 0 !important;
+}
+
+/* Replace Bootstrap utility classes with our own */
+.navbar .container-fluid.navbar-rtl {
+    flex-direction: row-reverse !important;
+}
+
+.navbar .container-fluid.navbar-ltr {
+    flex-direction: row !important;
+}
+
+/* Position logo and controls explicitly */
+.navbar-rtl .navbar-brand-container {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.navbar-rtl .controls-container {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* General navbar styling */
+.navbar-ltr {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-rtl {
+    padding: 0.5rem 1rem;
+}
+
+/* Button controls styling */
+.button-controls {
+    display: flex !important;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    /* Ensures inner buttons don't overflow rounded corners */
+}
+
+/* Remove margin between buttons to avoid gaps */
+.button-controls .btn {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Apply border radius only to the first and last buttons */
+.button-controls .btn:first-child {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.button-controls .btn:last-child {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+/* RTL specific adjustments */
+html[dir="rtl"] .button-controls .btn:first-child {
+    border-radius: 0 !important;
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+html[dir="rtl"] .button-controls .btn:last-child {
+    border-radius: 0 !important;
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+/* Fix button borders to create a continuous look */
+.button-controls .btn+.btn {
+    margin-left: -1px !important;
+}
+
+html[dir="rtl"] .button-controls .btn+.btn {
+    margin-right: -1px !important;
+    margin-left: 0 !important;
+}
+
+/* Mobile styling */
+@media (max-width: 768px) {
+    .controls-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}

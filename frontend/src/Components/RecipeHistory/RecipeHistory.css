@@ -1,0 +1,61 @@
+/* Recipe history card styles */
+.recipe-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card-image {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.recipe-card-placeholder {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.text-light-muted {
+    color: #adb5bd !important;
+}
+
+/* RecipeDisplay styles */
+.recipe-image-container {
+    overflow: hidden;
+    max-height: 400px;
+}
+
+.recipe-image {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Adjust card body when image is present */
+.recipe-image+.card-body {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Dark mode specific styles */
+.bg-dark .recipe-card-placeholder {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #adb5bd;
+}
+
+.bg-dark .recipe-image+.card-body {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,134 @@
+/* Base styles for NotFound404 */
+.NotFound404 {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Dark mode styles */
+.NotFound404.dark-mode {
+    background-color: #232323; /* Lighter dark mode */
+    color: #f8f9fa;
+}
+
+/* Light mode styles - darkened */
+.NotFound404.light-mode {
+    background-color: #d8d8d8; /* Changed from #f5f5f5 to #d8d8d8 - much darker */
+    color: #343a40;
+}
+
+/* Background wrapper */
+.background-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.background-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+/* Content container - Fix positioning issues */
+.NotFound404 .content-container {
+    position: relative;
+    z-index: 1;
+    padding-top: 70px; /* Add space for navbar */
+    height: calc(100vh - 70px); /* Adjust height accounting for navbar */
+}
+
+/* Transparent container for the error message - with increased transparency */
+.transparent-container {
+    background-color: rgba(216, 216, 216, 0.6); /* Changed to match the new darker light mode */
+    backdrop-filter: blur(5px); /* Add blur effect for better readability */
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.NotFound404.dark-mode .transparent-container {
+    background-color: rgba(35, 35, 35, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+/* Typography */
+.NotFound404 .subtitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); /* Add subtle text shadow for better contrast */
+}
+
+.NotFound404 .message-text {
+    font-size: 1.2rem;
+}
+
+.NotFound404.dark-mode .subtitle,
+.NotFound404.dark-mode .message-text,
+.NotFound404.dark-mode .humor {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.NotFound404 .humor {
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Button styling */
+.NotFound404 .home-button {
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.NotFound404 .home-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* RTL support */
+.NotFound404.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .NotFound404 .content-container {
+        padding-top: 60px;
+        height: calc(100vh - 60px);
+    }
+
+    .NotFound404 .subtitle {
+        font-size: 2rem;
+    }
+
+    .transparent-container {
+        padding: 1.5rem;
+        margin: 0 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .NotFound404 .content-container {
+        padding-top: 50px;
+    }
+
+    .NotFound404 .subtitle {
+        font-size: 1.8rem;
+    }
+
+    .NotFound404 .message-text {
+        font-size: 1rem;
+    }
+
+    .transparent-container {
+        padding: 1rem;
+    }
+}
