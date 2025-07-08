@@ -58,7 +58,7 @@ const RecipeHistoryPage: React.FC = () => {
                   />
                 ) : (
                   <div className={`recipe-card-placeholder ${isDarkMode ? 'bg-secondary' : 'bg-light'}`}>
-                    <span>{t('recipeHistory.noImage')}</span>
+                    <span>{t('Recipe image is coming soon...')}</span>
                   </div>
                 )}
 

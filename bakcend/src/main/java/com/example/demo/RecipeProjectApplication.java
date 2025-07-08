@@ -1,12 +1,12 @@
 package com.example.demo;
 
-import com.example.demo.utilities.Color;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import com.example.demo.utilities.Color;
 
 @SpringBootApplication
-@EnableJpaAuditing
+// @EnableJpaAuditing
 public class RecipeProjectApplication {
 
 	public static void main(String[] args) {

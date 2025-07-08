@@ -1,12 +1,11 @@
-import { JSX, useState } from "react";
-import { Card, Button, ProgressBar, Form, Container, Row, Col, Badge, InputGroup } from "react-bootstrap";
-import "./WizardForm.css";
-import { useTheme } from "../../Context/ThemeContext/ThemeContext";
-import { useTranslation } from "react-i18next"; // Add this import
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
+import { JSX, useState } from "react";
+import { Badge, Button, Card, Col, Container, Form, InputGroup, ProgressBar, Row, Spinner } from "react-bootstrap";
+import { useTranslation } from "react-i18next"; // Add this import
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from "../../Context/RecipeContext/RecipyContext";
+import { useTheme } from "../../Context/ThemeContext/ThemeContext";
+import "./WizardForm.css";
 
 
 // Define ingredient categories - keep enum in English for consistency
@@ -177,12 +176,22 @@ const handleSubmit = async () => {
         });
 
         // Prepare the data with translated values
+        // const requestData = {
+        //     difficulty: getDifficultyLabel(difficulty),
+        //     timeRange: getTimeRangeLabel(timeRange),
+        //     ingredients: translatedIngredients,
+        //     language: i18n.language
+        // };
+
         const requestData = {
-            difficulty: getDifficultyLabel(difficulty),
-            timeRange: getTimeRangeLabel(timeRange),
-            ingredients: translatedIngredients,
-            language: i18n.language
-        };
+    difficulty: getDifficultyLabel(difficulty),
+    timeRange: getTimeRangeLabel(timeRange),
+    ingredients: Object.values(selectedIngredients)
+        .flat()
+        .map(getIngredientLabel), // flatten and translate
+    language: i18n.language
+};
+        
 
         console.log('Sending recipe request with language:', i18n.language);
         console.log('Request data:', requestData);

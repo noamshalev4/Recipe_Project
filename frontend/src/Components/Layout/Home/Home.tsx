@@ -89,12 +89,15 @@ export function Home(): JSX.Element | null {
                         </h2>
                         <p style={{
                             fontSize: i18n.language === 'he' 
-                                ? 'clamp(0.65rem, 1.5vw, 0.85rem)' 
-                                : 'clamp(0.6rem, 1.5vw, 0.8rem)', // Different font size based on language
-                            lineHeight: '1.4',
+                                ? 'clamp(0.45rem, 1.2vw, 0.75rem)' 
+                                : 'clamp(0.4rem, 1.1vw, 0.7rem)', // Smaller responsive font sizes
+                            lineHeight: '1.3',
                             textAlign: i18n.language === 'he' ? 'right' : 'left',
                             margin: 0,
                             color: '#333',
+                            wordWrap: 'break-word',
+                            overflow: 'hidden',
+                            maxHeight: '100%',
                         }}>
                             {i18n.language === 'he'
                                 ? <>

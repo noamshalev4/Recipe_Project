@@ -1,6 +1,9 @@
 package com.example.demo.services;
 
+import java.time.Duration;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,10 +29,26 @@ public class OpenAiService {
         this.model = model;
     }
 
-    public Mono<Map<String, String>> generateRecipe(String prompt) {
-        System.err.println("Generating Recipe started");
+    // Generate only the recipe text
+    public Mono<Map<String, String>> generateRecipeAndImage(String userPrompt) {
+        return generateTextRecipe(userPrompt)
+                .map(recipe -> {
+                    // Image generation removed
+                    return Map.of("recipe", recipe);
+                });
 
-        log.info("Generating recipe using OpenAI API with prompt: {}", prompt);
+//        return generateTextRecipe(userPrompt)
+//                .flatMap(recipe -> {
+//                    String prompt = isHebrew(userPrompt)
+//                            ? "תבשיל על בסיס המתכון הבא (מוצרים בעולם האמיתי לא מצוירים): " + recipe
+//                            : "A dish based on the following recipe (real world items not cartoon): " + recipe;
+//                    return generateImage(prompt)
+//                            .map(imageUrl -> Map.of("recipe", recipe, "image", imageUrl));
+//                });
+    }
+
+    private Mono<String> generateTextRecipe(String prompt) {
+        log.info("Generating text recipe with prompt: {}", prompt);
 
         Map<String, Object> requestBody = Map.of(
                 "model", model,
@@ -40,7 +59,7 @@ public class OpenAiService {
                 "temperature", 0.7,
                 "max_tokens", 1000
         );
-        System.err.println("Generating Recipe ended");
+
         return webClient.post()
                 .uri("https://api.openai.com/v1/chat/completions")
                 .bodyValue(requestBody)
@@ -49,63 +68,66 @@ public class OpenAiService {
                 .flatMap(response -> {
                     try {
                         @SuppressWarnings("unchecked")
-                        var choices = (java.util.List<Map<String, Object>>) response.get("choices");
+                        var choices = (List<Map<String, Object>>) response.get("choices");
                         if (choices == null || choices.isEmpty()) {
-                            log.error("No choices found in OpenAI response: {}", response);
-                            return Mono.error(new RuntimeException("Error: No choices found."));
+                            return Mono.error(new RuntimeException("No choices found."));
                         }
                         @SuppressWarnings("unchecked")
                         Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
-                        String recipe = message.get("content").toString();
-
-//                        return  Mono.just(Map.of("recipe", recipe));
-//                         Generate an image for the recipe
-                        return generateImage("A dish based on the following recipe: " + recipe)
-                                .map(imageUrl -> Map.of("recipe", recipe, "image", imageUrl));
+                        return Mono.just(message.get("content").toString());
                     } catch (Exception e) {
-                        log.error("Error parsing OpenAI response: {}", response, e);
-                        return Mono.error(new RuntimeException("Error parsing response."));
-                    }
-                });
-    }
-    public Mono<String> generateImage(String prompt) {
-        System.err.println("Generating Image started");
-        log.info("Generating image using DALL-E API with prompt: {}", prompt);
-
-        Map<String, Object> requestBody = Map.of(
-                "model", "dall-e-3",
-                "prompt", prompt,
-                "n", 1,
-                "size", "1024x1024",
-                "quality", "standard"
-        );
-        System.err.println("Generating Image ended");
-        return webClient.post()
-                .uri("https://api.openai.com/v1/images/generations")
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(Map.class)
-                .doOnNext(response -> log.debug("DALL-E API response: {}", response))
-                .map(response -> {
-                    try {
-                        @SuppressWarnings("unchecked")
-                        var data = (java.util.List<Map<String, Object>>) response.get("data");
-                        if (data == null || data.isEmpty()) {
-                            log.error("No image data found in DALL-E response: {}", response);
-                            return "Error: No image URL found.";
-                        }
-                        String imageUrl = data.get(0).get("url").toString();
-                        log.info("Successfully generated image URL: {}", imageUrl);
-                        return imageUrl;
-                    } catch (Exception e) {
-                        log.error("Error parsing DALL-E response: {}", response, e);
-                        return "Error parsing response.";
+                        return Mono.error(new RuntimeException("Error parsing recipe response."));
                     }
                 })
-                .onErrorResume(WebClientResponseException.class, e -> {
-                    log.error("DALL-E API error: {}, Response body: {}",
-                            e.getMessage(), e.getResponseBodyAsString());
-                    return Mono.just("Error generating image: " + e.getMessage());
-                });
+                .onErrorResume(WebClientResponseException.class,
+                        e -> Mono.error(new RuntimeException("Error generating recipe: " + e.getResponseBodyAsString())))
+                .onErrorResume(Exception.class,
+                        e -> Mono.error(new RuntimeException("Unexpected error: " + e.getMessage())));
     }
+
+    private boolean isHebrew(String text) {
+        if (text == null) return false;
+        return Pattern.compile("\\p{InHebrew}").matcher(text).find();
+    }
+
+//    public Mono<String> generateImage(String prompt) {
+//        log.info("Generating image with prompt length {}", prompt.length());
+//        if (prompt.length() > 1000) {
+//            log.warn("Prompt exceeds 1000 characters. Truncating.");
+//            prompt = prompt.substring(0, 1000);
+//        }
+//        Map<String, Object> requestBody = Map.of(
+//                "model", "gpt-image-1",
+//                "prompt", prompt,
+//                "size", "1024x1024",
+//                "quality", "high",
+//                "background", "transparent",
+//                "n", 1
+//        );
+//
+//        return webClient.post()
+//                .uri("https://api.openai.com/v1/images/generations")
+//                .bodyValue(requestBody)
+//                .retrieve()
+//                .bodyToMono(Map.class)
+//                .timeout(Duration.ofSeconds(120))
+//                .flatMap(response -> {
+//                    try {
+//                        @SuppressWarnings("unchecked")
+//                        var data = (List<Map<String, Object>>) response.get("data");
+//                        if (data == null || data.isEmpty()) {
+//                            return Mono.error(new RuntimeException("No image found."));
+//                        }
+//                        return Mono.just(data.get(0).get("b64_json").toString());
+//                    } catch (Exception e) {
+//                        return Mono.error(new RuntimeException("Error parsing image response."));
+//                    }
+//                })
+//                .onErrorResume(WebClientResponseException.class, e -> {
+//                    log.error("Image generation error: status={}, body={}", e.getStatusCode(), e.getResponseBodyAsString());
+//                    return Mono.error(new RuntimeException("Error generating image: " + e.getResponseBodyAsString()));
+//                })
+//                .onErrorResume(Exception.class,
+//                        e -> Mono.error(new RuntimeException("Unexpected error: " + e.getMessage())));
+//    }
 }

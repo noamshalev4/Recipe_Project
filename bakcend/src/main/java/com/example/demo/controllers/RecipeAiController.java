@@ -14,34 +14,33 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import com.example.demo.controllers.RecipeAiController.RecipeGenerationException;
 import com.example.demo.dto.RecipeGenerationRequest;
 import com.example.demo.services.OpenAiService;
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
-import jakarta.servlet.http.HttpServletRequest; // For Bucket4j IP identification
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/recipes")
-@CrossOrigin(origins = "*") // Configure more restrictively for production
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 public class RecipeAiController {
 
     private final OpenAiService openAiService;
-    private final PromptBuilder promptBuilder; // Make sure this bean is available
-
-    // Rate limiting map for requests TO THIS SERVER (not to OpenAI)
+    private final PromptBuilder promptBuilder;
     private final Map<String, Bucket> ipBucketMap = new ConcurrentHashMap<>();
 
-    // Bucket4j configuration: 5 requests per minute from a single IP to this controller endpoint
     private Bucket createBucketPerIp() {
-        Bandwidth limit = Bandwidth.classic(5, Refill.intervally(5, Duration.ofMinutes(1)));
+//        Bandwidth limit = Bandwidth.classic(5, Refill.intervally(5, Duration.ofMinutes(1)));
+//        return Bucket.builder().addLimit(limit).build();
+
+        Bandwidth limit = Bandwidth.classic(1, Refill.intervally(1, Duration.ofDays(1)));
         return Bucket.builder().addLimit(limit).build();
     }
 
@@ -51,13 +50,12 @@ public class RecipeAiController {
 
     @PostMapping("/generate")
     public Mono<Map<String, Map<String, String>>> generateRecipe(@RequestBody RecipeGenerationRequest request,
-                                                                 HttpServletRequest httpRequest) { // HttpServletRequest for IP
+                                                                 HttpServletRequest httpRequest) {
         String clientIp = httpRequest.getRemoteAddr();
         Bucket bucket = resolveBucketForIp(clientIp);
 
         if (!bucket.tryConsume(1)) {
             log.warn("Rate limit exceeded for IP: {}", clientIp);
-            // Return an error Mono directly, which will be handled by the @ExceptionHandler
             return Mono.error(new TooManyRequestsToSelfException("Too many requests to this server – please wait a minute."));
         }
 
@@ -74,43 +72,36 @@ public class RecipeAiController {
         );
 
         log.info("Received request to generate recipe for IP: {}", clientIp);
-        return openAiService.generateRecipe(prompt)
+        return openAiService.generateRecipeAndImage(prompt)
                 .map(recipe -> Map.of("recipe", recipe))
                 .onErrorResume(WebClientResponseException.TooManyRequests.class, e -> {
-                    // This catches the 429 from OpenAiService specifically
-                    log.error("OpenAI rate limit hit when calling from controller.", e);
-                    return Mono.error(new OpenAiRateLimitException("The recipe service is currently busy (OpenAI rate limit). Please try again in a moment."));
+                    log.error("OpenAI rate limit hit.", e);
+                    return Mono.error(new OpenAiRateLimitException("The recipe service is currently busy (OpenAI rate limit)."));
                 })
                 .onErrorResume(throwable -> {
-                    // Catch other errors from OpenAiService
-                    log.error("An unexpected error occurred while generating the recipe.", throwable);
-                    return Mono.error(new RecipeGenerationException("Failed to generate recipe due to an internal error."));
+                    log.error("An unexpected error occurred.", throwable);
+                    return Mono.error(new RecipeGenerationException("Failed to generate recipe."));
                 });
     }
 
-    // Custom Exception for rate limiting calls to this server itself
     public static class TooManyRequestsToSelfException extends RuntimeException {
         public TooManyRequestsToSelfException(String message) {
             super(message);
         }
     }
 
-    // Custom Exception for OpenAI specific rate limit errors passed to client
     public static class OpenAiRateLimitException extends RuntimeException {
         public OpenAiRateLimitException(String message) {
             super(message);
         }
     }
 
-    // Custom Exception for other recipe generation errors
     public static class RecipeGenerationException extends RuntimeException {
         public RecipeGenerationException(String message) {
             super(message);
         }
     }
 
-
-    // Exception Handlers
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     @ExceptionHandler(TooManyRequestsToSelfException.class)
     public Map<String, String> handleTooManyRequestsToSelf(TooManyRequestsToSelfException e) {
@@ -135,11 +126,42 @@ public class RecipeAiController {
         return Map.of("error", e.getMessage(), "type", "INTERNAL_ERROR");
     }
 
-    // A more general fallback handler for other unexpected errors
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Map<String, String> handleGenericException(Exception e) {
-        log.error("An unexpected generic error occurred: ", e); // Log the full stack trace for unexpected errors
+        log.error("An unexpected generic error occurred: ", e);
         return Map.of("error", "An unexpected error occurred. Please try again later.", "type", "UNEXPECTED_ERROR");
     }
+
+
+    @PostMapping("/generate-no-limit")
+    public Mono<Map<String, Map<String, String>>> generateRecipeNoLimit(
+            @RequestBody RecipeGenerationRequest request
+    ) {
+        if (request.getIngredients() == null || request.getIngredients().isEmpty()) {
+            log.warn("Bad request: Ingredients list is empty.");
+            return Mono.error(new IllegalArgumentException("Ingredients list cannot be empty."));
+        }
+
+        String prompt = promptBuilder.buildPrompt(
+                request.getDifficulty(),
+                request.getTimeRange(),
+                request.getIngredients(),
+                request.getLanguage()
+        );
+
+        log.info("Received request to generate recipe (no limit).");
+        return openAiService.generateRecipeAndImage(prompt)
+                .map(recipe -> Map.of("recipe", recipe))
+                .onErrorResume(WebClientResponseException.TooManyRequests.class, e -> {
+                    log.error("OpenAI rate limit hit.", e);
+                    return Mono.error(new OpenAiRateLimitException("The recipe service is currently busy (OpenAI rate limit)."));
+                })
+                .onErrorResume(throwable -> {
+                    log.error("An unexpected error occurred.", throwable);
+                    return Mono.error(new RecipeGenerationException("Failed to generate recipe."));
+                });
+
+    }
+
 }
