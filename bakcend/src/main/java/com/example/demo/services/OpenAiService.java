@@ -48,7 +48,7 @@ public class OpenAiService {
     }
 
     private Mono<String> generateTextRecipe(String prompt) {
-        log.info("Generating text recipe with prompt: {}", prompt);
+//        log.info("Generating text recipe with prompt: {}", prompt);
 
         Map<String, Object> requestBody = Map.of(
                 "model", model,

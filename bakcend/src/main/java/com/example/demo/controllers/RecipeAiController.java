@@ -44,6 +44,14 @@ public class RecipeAiController {
         return Bucket.builder().addLimit(limit).build();
     }
 
+    private String getClientIp(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader != null && !xfHeader.isEmpty()) {
+            return xfHeader.split(",")[0].trim();
+        }
+        return request.getRemoteAddr();
+    }
+
     private Bucket resolveBucketForIp(String ip) {
         return ipBucketMap.computeIfAbsent(ip, k -> createBucketPerIp());
     }
@@ -51,7 +59,14 @@ public class RecipeAiController {
     @PostMapping("/generate")
     public Mono<Map<String, Map<String, String>>> generateRecipe(@RequestBody RecipeGenerationRequest request,
                                                                  HttpServletRequest httpRequest) {
-        String clientIp = httpRequest.getRemoteAddr();
+//       Make current thread sleep for 3 minutes to simulate a long-running process
+//        try {
+//            Thread.sleep(180_000); // Simulate a delay for testing purposes
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//            log.error("Thread interrupted during sleep", e);
+//        }
+        String clientIp = getClientIp(httpRequest);
         Bucket bucket = resolveBucketForIp(clientIp);
 
         if (!bucket.tryConsume(1)) {

@@ -79,7 +79,7 @@ export function Home(): JSX.Element | null {
                     >
                         <h2 className="mb-2" style={{
                             fontWeight: 'bold',
-                            fontSize: 'clamp(1rem, 2vw, 1.2rem)', // Smaller font size
+                            fontSize: 'clamp(1.5rem, 2vw, 1.2rem)', // Smaller font size
                             color: isDarkMode ? '#5594e2' : '#2C71C1'
                         }}>
                             {i18n.language === 'he'
@@ -88,30 +88,21 @@ export function Home(): JSX.Element | null {
                             }
                         </h2>
                         <p style={{
-                            fontSize: i18n.language === 'he' 
-                                ? 'clamp(0.45rem, 1.2vw, 0.75rem)' 
-                                : 'clamp(0.4rem, 1.1vw, 0.7rem)', // Smaller responsive font sizes
-                            lineHeight: '1.3',
+                            fontSize: i18n.language === 'he'
+                                ? 'clamp(1.3rem, 1.5vw, 0.85rem)'
+                                : 'clamp(1.24rem, 1.5vw, 0.8rem)', // Different font size based on language
+                            lineHeight: '1.4',
                             textAlign: i18n.language === 'he' ? 'right' : 'left',
                             margin: 0,
                             color: '#333',
-                            wordWrap: 'break-word',
-                            overflow: 'hidden',
-                            maxHeight: '100%',
                         }}>
                             {i18n.language === 'he'
                                 ? <>
-                                    בין אם אתם סטודנטים, פרילנסרים, או כאלה שהמקרר שלהם נראה כמו תערוכת אמנות מינימליסטית – האתר הזה בשבילכם.<br />
-                                    כאן תמצאו מתכונים טעימים ופשוטים, עם מה שכבר יש בבית.<br />
-                                    לא צריך להיות שף, ולא צריך רשימת קניות <br /><span style={{ fontFamily: '"Arial", sans-serif' }}>שגדולה מה - To Do List שלכם</span> – פשוט תבחרו מה שיש, ואנחנו נטפל בשאר.<br />
-                                    המתכונים מותאמים לחיים האמיתיים: מהירים, חכמים, וידידותיים לתקציב.<br />
+                                    לא משנה אם אתם סטודנטים, פרילנסרים, או פשוט עם מקרר ריק – אנחנו נהפוך את מה שיש למשהו טעים.<br />
                                     אז קדימה – הכניסו את המרכיבים שיש לכם בבית, ו־<span style={{ fontFamily: '"Arial", sans-serif' }}>Reciply</span> תפתיע אתכם עם משהו טעים במיוחד.
                                 </>
                                 : <>
-                                    Whether you're a student, a freelancer, or your fridge looks like a minimalist art exhibit – this site is for you.<br />
-                                    Here, you'll find tasty, simple recipes using only what you already have at home.<br />
-                                    No need to be a chef or make a shopping list longer than your To-Do List – just pick what you've got, and we'll take it from there.<br />
-                                    Our recipes are made for real life: quick, clever, and budget-friendly.<br />
+                                    Whether you're a student, a freelancer, or just staring at an empty fridge, we turn what you have into something great.<br />
                                     So go ahead – enter the ingredients you've got lying around, and let Reciply surprise you with something delicious.
                                 </>
                             }

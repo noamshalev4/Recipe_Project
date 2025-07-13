@@ -55,7 +55,7 @@ export function RecipeDisplay({
 
     // Ensure recipe is a string before splitting
     const recipeText = typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
-    
+
     // Format the recipe text
     const formattedRecipe = recipeText.split('\n').map((line, i) => {
         // Make titles bold
@@ -82,19 +82,19 @@ export function RecipeDisplay({
                     {t('recipe.close')}
                 </Button>
             </Card.Header>
-            
+
             {/* Display recipe image if available */}
             {imageUrl && (
                 <div className="recipe-image-container">
-                    <Card.Img 
-                        variant="top" 
-                        src={imageUrl} 
-                        alt={t('recipe.recipeImage')} 
+                    <Card.Img
+                        variant="top"
+                        src={imageUrl}
+                        alt={t('recipe.recipeImage')}
                         className="recipe-image"
                     />
                 </div>
             )}
-            
+
             <Card.Body>
                 <div className="recipe-content">
                     {formattedRecipe}
