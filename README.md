@@ -263,7 +263,7 @@ Recipe_Project/
 <div align="center">
 
 ### Home Page
-![Home Page](frontend/src/assets/home_english.png)
+![Home Page](home_page.png)
 
 ### Recipe Generation Wizard
 *Beautiful ingredient selection interface with categorized options*
