@@ -321,7 +321,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 **Email**: [your-email@example.com](mailto:noamsbest@gmail.com)
+- 📧 **Email**: [noamsbest@gmail.com](mailto:noamsbest@gmail.com)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/noamshalev4/Recipe_Project/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/noamshalev4/Recipe_Project/discussions)
 
