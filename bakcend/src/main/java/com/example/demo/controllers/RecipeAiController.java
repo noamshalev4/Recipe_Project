@@ -40,7 +40,7 @@ public class RecipeAiController {
 //        Bandwidth limit = Bandwidth.classic(5, Refill.intervally(5, Duration.ofMinutes(1)));
 //        return Bucket.builder().addLimit(limit).build();
 
-        Bandwidth limit = Bandwidth.classic(1, Refill.intervally(1, Duration.ofDays(1)));
+        Bandwidth limit = Bandwidth.classic(3, Refill.intervally(3, Duration.ofDays(1)));
         return Bucket.builder().addLimit(limit).build();
     }
 
