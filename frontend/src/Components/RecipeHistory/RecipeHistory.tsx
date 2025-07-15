@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecipes, Recipe } from '../../Context/RecipeContext/RecipyContext'; // Import Recipe type
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../Context/ThemeContext/ThemeContext';
 import './RecipeHistory.css';
 
 const RecipeHistoryPage: React.FC = () => {
-  const { recipes, setCurrentRecipe } = useRecipes();
+  const { recipes, setCurrentRecipe, deleteRecipe } = useRecipes();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { isDarkMode } = useTheme();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [recipeToDelete, setRecipeToDelete] = useState<string | null>(null);
+
+  // Clean up asterisks and other markdown formatting
+  const cleanText = (text: string): string => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
+      .replace(/\*(.*?)\*/g, '$1')     // Remove *italic* formatting
+      .replace(/^\*\s*/gm, '• ')       // Convert * bullets to proper bullets
+      .replace(/#/g, '')               // Remove all hashtags #
+      .replace(/[^\w\s!().,;:?•\-]/g, '') // Remove special chars except ! ( ) and common punctuation including :
+      .trim();
+  };
 
   const handleViewRecipe = (recipeId: string) => {
     const recipe = recipes.find(r => r.id === recipeId);
@@ -18,6 +31,24 @@ const RecipeHistoryPage: React.FC = () => {
       setCurrentRecipe(recipe);
       navigate('/recipe');
     }
+  };
+
+  const handleDeleteClick = (recipeId: string) => {
+    setRecipeToDelete(recipeId);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (recipeToDelete) {
+      deleteRecipe(recipeToDelete);
+      setRecipeToDelete(null);
+      setShowDeleteModal(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setRecipeToDelete(null);
+    setShowDeleteModal(false);
   };
 
   return (
@@ -68,11 +99,21 @@ const RecipeHistoryPage: React.FC = () => {
                     {recipe.difficulty} | {recipe.timeRange}
                   </Card.Subtitle>
                   <Card.Text>
-                    {recipe.content.substring(0, 120)}...
+                    {cleanText(recipe.content).substring(0, 120)}...
                   </Card.Text>
-                  <Button variant="primary" onClick={() => handleViewRecipe(recipe.id)}>
-                    {t('recipeHistory.viewRecipe')}
-                  </Button>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <Button variant="primary" onClick={() => handleViewRecipe(recipe.id)}>
+                      {t('recipeHistory.viewRecipe')}
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => handleDeleteClick(recipe.id)}
+                      title="Delete Recipe"
+                    >
+                      🗑️
+                    </Button>
+                  </div>
                 </Card.Body>
                 <Card.Footer className={isDarkMode ? 'text-light-muted' : 'text-muted'}>
                   <small>{new Date(recipe.createdAt).toLocaleString()}</small>
@@ -82,6 +123,24 @@ const RecipeHistoryPage: React.FC = () => {
           ))}
         </Row>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={handleCancelDelete} centered>
+        <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
+          <Modal.Title>Delete Recipe</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
+          Are you sure you want to delete this recipe? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
+          <Button variant="secondary" onClick={handleCancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirmDelete}>
+            Delete Recipe
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

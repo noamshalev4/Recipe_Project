@@ -330,6 +330,40 @@ const resources = {
         },
         "errors": {
           "generationFailed": "Failed to generate recipe. Please try again."
+        },
+        "modals": {
+          "tooManyRequests": {
+            "title": "🍳 Whoa There, Master Chef! 🍳",
+            "message": "Looks like our kitchen is getting quite busy! 👨‍🍳",
+            "description": "You've been cooking up so many requests that our chef needs a quick breather. Please wait a moment before creating your next culinary masterpiece.",
+            "note": "Don't worry - great recipes are worth the wait! 🕒✨",
+            "button": "Got it, I'll wait! 👍"
+          },
+          "serverError": {
+            "title": "🔧 Kitchen Temporarily Closed 🔧",
+            "message": "Oops! It seems our kitchen equipment is having a little hiccup! 🤖",
+            "description": "Our technical chef is working hard to get everything back up and running. This could be due to:",
+            "reasons": {
+              "server": "🔌 Server taking a coffee break",
+              "network": "📡 Network connection playing hide and seek",
+              "technical": "⚡ Temporary technical difficulties"
+            },
+            "note": "Please try again in a few moments! Your delicious recipe is worth the wait! 🍽️",
+            "button": "I'll try again later 🍀"
+          },
+          "ingredientWarning": {
+            "title": "🤔 Ambitious Chef Alert! 🤔",
+            "message": "Wow! You've selected {{count}} ingredients! 🎯",
+            "description": "While we love your enthusiasm, having more than 15 ingredients might:",
+            "reasons": {
+              "time": "🕐 Take longer to process (our chef needs thinking time!)",
+              "complexity": "🧩 Create a more complex recipe than expected",
+              "balance": "🤹‍♂️ Make it harder to balance all those flavors"
+            },
+            "question": "Would you like to:",
+            "buttonReduce": "Let me reduce ingredients 📝",
+            "buttonContinue": "Cook with all {{count}}! 🚀"
+          }
         }
         // Removed contact from here
       },
@@ -699,6 +733,40 @@ const resources = {
         },
         "errors": {
           "generationFailed": "יצירת המתכון נכשלה. אנא נסה שוב."
+        },
+        "modals": {
+          "tooManyRequests": {
+            "title": "🍳 רגע, מאסטר שף! 🍳",
+            "message": "נראה שהמטבח שלנו די עסוק! 👨‍🍳",
+            "description": "בישלת כל כך הרבה בקשות שהשף שלנו צריך הפסקה קצרה. אנא חכה רגע לפני שתיצור את יצירת הקולינריה הבאה שלך.",
+            "note": "אל תדאג - מתכונים טובים שווים את ההמתנה! 🕒✨",
+            "button": "הבנתי, אחכה! 👍"
+          },
+          "serverError": {
+            "title": "🔧 המטבח סגור זמנית 🔧",
+            "message": "אופס! נראה שציוד המטבח שלנו קצת מתקשה! 🤖",
+            "description": "השף הטכני שלנו עובד קשה להחזיר הכל לפעולה. זה יכול להיות בגלל:",
+            "reasons": {
+              "server": "🔌 השרת לוקח הפסקת קפה",
+              "network": "📡 חיבור הרשת משחק מחבואים",
+              "technical": "⚡ קשיים טכניים זמניים"
+            },
+            "note": "אנא נסה שוב בעוד כמה רגעים! המתכון הטעים שלך שווה את ההמתנה! 🍽️",
+            "button": "אנסה שוב מאוחר יותר 🍀"
+          },
+          "ingredientWarning": {
+            "title": "🤔 אזהרה לשף השאפתן! 🤔",
+            "message": "וואו! בחרת {{count}} מרכיבים! 🎯",
+            "description": "אמנם אנחנו אוהבים את הנלהבות שלך, אבל יותר מ-15 מרכיבים עלול:",
+            "reasons": {
+              "time": "🕐 לקחת יותר זמן לעיבוד (השף שלנו צריך זמן מחשבה!)",
+              "complexity": "🧩 ליצור מתכון מורכב יותר מהצפוי",
+              "balance": "🤹‍♂️ להקשות על איזון כל הטעמים האלה"
+            },
+            "question": "האם תרצה:",
+            "buttonReduce": "בואו אפחית מרכיבים 📝",
+            "buttonContinue": "לבשל עם כל ה-{{count}}! 🚀"
+          }
         }
         // Removed contact from here
       },

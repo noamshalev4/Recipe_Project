@@ -16,6 +16,7 @@ interface RecipeContextType {
   addRecipe: (recipe: Omit<Recipe, 'id' | 'createdAt'>) => void;
   setCurrentRecipe: (recipe: Recipe | null) => void;
   clearCurrentRecipe: () => void;
+  deleteRecipe: (recipeId: string) => void;
 }
 
 const RECIPES_STORAGE_KEY = 'reciply_recipes';
@@ -99,6 +100,15 @@ export const RecipeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setCurrentRecipe(null);
   };
 
+  const deleteRecipe = (recipeId: string) => {
+    setRecipes(prev => prev.filter(recipe => recipe.id !== recipeId));
+
+    // If the deleted recipe is the current one, clear it
+    if (currentRecipe && currentRecipe.id === recipeId) {
+      setCurrentRecipe(null);
+    }
+  };
+
   return (
     <RecipeContext.Provider
       value={{
@@ -106,7 +116,8 @@ export const RecipeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         currentRecipe,
         addRecipe,
         setCurrentRecipe,
-        clearCurrentRecipe
+        clearCurrentRecipe,
+        deleteRecipe
       }}
     >
       {children}

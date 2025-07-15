@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { JSX, useState } from "react";
-import { Badge, Button, Card, Col, Container, Form, InputGroup, ProgressBar, Row, Spinner } from "react-bootstrap";
+import { Badge, Button, Card, Col, Container, Form, InputGroup, ProgressBar, Row, Spinner, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next"; // Add this import
 import { useNavigate } from 'react-router-dom';
 import { useRecipes } from "../../Context/RecipeContext/RecipyContext";
@@ -40,7 +40,12 @@ export function WizardForm(): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
     const [generatedRecipe, setGeneratedRecipe] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
-    // const [showRecipe, setShowRecipe] = useState(false);
+
+    // Modal states
+    const [showTooManyRequestsModal, setShowTooManyRequestsModal] = useState(false);
+    const [showServerErrorModal, setShowServerErrorModal] = useState(false);
+    const [showIngredientWarningModal, setShowIngredientWarningModal] = useState(false);
+
     const { addRecipe } = useRecipes();
     const navigate = useNavigate();
 
@@ -137,150 +142,172 @@ export function WizardForm(): JSX.Element {
         }
     };
 
-const handleSubmit = async () => {
-    try {
-        // Validation stays the same
-        if (!difficulty) {
-            alert(t('wizard.validation.selectDifficulty'));
-            return;
-        }
-        if (!timeRange) {
-            alert(t('wizard.validation.selectTime'));
-            return;
-        }
+    // Helper function to count total selected ingredients
+    const getTotalIngredientsCount = (): number => {
+        return Object.values(selectedIngredients).reduce((total, ingredients) => total + ingredients.length, 0);
+    };
 
-        // Check if any ingredients are selected
-        const hasIngredients = Object.values(selectedIngredients).some(
-            category => category.length > 0
-        );
-
-        if (!hasIngredients) {
-            alert(t('wizard.validation.selectIngredients'));
-            return;
-        }
-
-        setIsLoading(true);
-        setError(null);
-
-        // Create translated ingredient selections
-        const translatedIngredients: Record<string, string[]> = {};
-
-        Object.entries(selectedIngredients).forEach(([category, ingredients]) => {
-            // Translate the category name
-            const translatedCategory = getCategoryLabel(category as IngredientCategory);
-
-            // Translate each ingredient in the category
-            translatedIngredients[translatedCategory] = ingredients.map(ingredient =>
-                getIngredientLabel(ingredient)
-            );
+    // Function to remove an ingredient
+    const removeIngredient = (category: IngredientCategory, ingredientToRemove: string) => {
+        setSelectedIngredients({
+            ...selectedIngredients,
+            [category]: selectedIngredients[category].filter(ingredient => ingredient !== ingredientToRemove)
         });
+    };
 
-        // Prepare the data with translated values
-        // const requestData = {
-        //     difficulty: getDifficultyLabel(difficulty),
-        //     timeRange: getTimeRangeLabel(timeRange),
-        //     ingredients: translatedIngredients,
-        //     language: i18n.language
-        // };
-
-        const requestData = {
-    difficulty: getDifficultyLabel(difficulty),
-    timeRange: getTimeRangeLabel(timeRange),
-    ingredients: Object.values(selectedIngredients)
-        .flat()
-        .map(getIngredientLabel), // flatten and translate
-    language: i18n.language
-};
-        
-
-        console.log('Sending recipe request with language:', i18n.language);
-        console.log('Request data:', requestData);
-
-        // Send request with proper headers
-        const response = await axios.post('http://localhost:8080/api/recipes/generate',
-            requestData,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept-Language': i18n.language
-                }
+    const handleSubmit = async () => {
+        try {
+            // Validation stays the same
+            if (!difficulty) {
+                alert(t('wizard.validation.selectDifficulty'));
+                return;
             }
-        );
+            if (!timeRange) {
+                alert(t('wizard.validation.selectTime'));
+                return;
+            }
 
-        // Log the full response for debugging
-        console.log('Backend response:', response.data);
+            // Check if any ingredients are selected
+            const hasIngredients = Object.values(selectedIngredients).some(
+                category => category.length > 0
+            );
 
-        // Handle different response formats
-        if (!response.data) {
-            throw new Error('No data received from server');
+            if (!hasIngredients) {
+                alert(t('wizard.validation.selectIngredients'));
+                return;
+            }
+
+            // Check for too many ingredients and show warning
+            const totalIngredients = getTotalIngredientsCount();
+            if (totalIngredients > 15) {
+                setShowIngredientWarningModal(true);
+                return;
+            }
+
+            await executeRecipeGeneration();
+        } catch (err: any) {
+            console.error('Error in handleSubmit:', err);
         }
+    };
 
-        let recipeText = '';
-        let imageUrl = '';
+    const executeRecipeGeneration = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
 
-        // NEW LOGIC: Handle the nested recipe object structure
-        if (response.data.recipe && typeof response.data.recipe === 'object') {
-            // Handle the nested structure like { recipe: { recipe: "text", image: "url" } }
-            recipeText = response.data.recipe.recipe || '';
-            imageUrl = response.data.recipe.image || '';
-        } else if (typeof response.data === 'object') {
-            // Try the original approach for backward compatibility
-            if (response.data.recipeText) {
-                recipeText = response.data.recipeText;
-                imageUrl = response.data.imageUrl || '';
+            // Create translated ingredient selections
+            const translatedIngredients: Record<string, string[]> = {};
+
+            Object.entries(selectedIngredients).forEach(([category, ingredients]) => {
+                // Translate the category name
+                const translatedCategory = getCategoryLabel(category as IngredientCategory);
+
+                // Translate each ingredient in the category
+                translatedIngredients[translatedCategory] = ingredients.map(ingredient =>
+                    getIngredientLabel(ingredient)
+                );
+            });
+
+            const requestData = {
+                difficulty: getDifficultyLabel(difficulty),
+                timeRange: getTimeRangeLabel(timeRange),
+                ingredients: Object.values(selectedIngredients)
+                    .flat()
+                    .map(getIngredientLabel), // flatten and translate
+                language: i18n.language
+            };
+
+
+            console.log('Sending recipe request with language:', i18n.language);
+            console.log('Request data:', requestData);
+
+            // Send request with proper headers
+            const response = await axios.post('http://localhost:8080/api/recipes/generate',
+                requestData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept-Language': i18n.language
+                    }
+                }
+            );
+
+            // Log the full response for debugging
+            console.log('Backend response:', response.data);
+
+            // Handle different response formats
+            if (!response.data) {
+                throw new Error('No data received from server');
+            }
+
+            let recipeText = '';
+            let imageUrl = '';
+
+            // NEW LOGIC: Handle the nested recipe object structure
+            if (response.data.recipe && typeof response.data.recipe === 'object') {
+                // Handle the nested structure like { recipe: { recipe: "text", image: "url" } }
+                recipeText = response.data.recipe.recipe || '';
+                imageUrl = response.data.recipe.image || '';
+            } else if (typeof response.data === 'object') {
+                // Try the original approach for backward compatibility
+                if (response.data.recipeText) {
+                    recipeText = response.data.recipeText;
+                    imageUrl = response.data.imageUrl || '';
+                } else if (typeof response.data === 'string') {
+                    recipeText = response.data;
+                } else {
+                    // If we can't find the expected structure, show the error
+                    console.error('Unexpected response structure:', response.data);
+                    throw new Error('Invalid response format from server');
+                }
             } else if (typeof response.data === 'string') {
+                // If the response is just a string
                 recipeText = response.data;
             } else {
-                // If we can't find the expected structure, show the error
-                console.error('Unexpected response structure:', response.data);
-                throw new Error('Invalid response format from server');
+                throw new Error('Unknown response format');
             }
-        } else if (typeof response.data === 'string') {
-            // If the response is just a string
-            recipeText = response.data;
-        } else {
-            throw new Error('Unknown response format');
-        }
 
-        // Set the generated recipe in state
-        setGeneratedRecipe(recipeText);
+            // Set the generated recipe in state
+            setGeneratedRecipe(recipeText);
 
-        // Add the recipe to context
-        addRecipe({
-            content: recipeText,
-            difficulty: difficulty,
-            timeRange: timeRange,
-            imageUrl: imageUrl // Include the image URL
-        });
+            // Add the recipe to context
+            addRecipe({
+                content: recipeText,
+                difficulty: difficulty,
+                timeRange: timeRange,
+                imageUrl: imageUrl // Include the image URL
+            });
 
-        // Navigate to the recipe page
-        navigate('/recipe');
-    } catch (err: any) {
-        console.error('Error generating recipe:', err);
+            // Navigate to the recipe page
+            navigate('/recipe');
+        } catch (err: any) {
+            console.error('Error generating recipe:', err);
 
-        // Enhanced error handling
-        if (err.response) {
-            // The server responded with an error status code
-            console.error('Server error response:', err.response.data);
-            console.error('Status code:', err.response.status);
+            // Enhanced error handling with modals
+            if (err.response) {
+                // The server responded with an error status code
+                console.error('Server error response:', err.response.data);
+                console.error('Status code:', err.response.status);
 
-            if (err.response.data && err.response.data.message) {
-                setError(err.response.data.message);
+                if (err.response.status === 429) {
+                    // Too Many Requests
+                    setShowTooManyRequestsModal(true);
+                } else {
+                    // Other server errors
+                    setShowServerErrorModal(true);
+                }
+            } else if (err.request) {
+                // The request was made but no response received
+                console.error('No response received from server');
+                setShowServerErrorModal(true);
             } else {
-                setError(`${t('wizard.errors.generationFailed')} (Status: ${err.response.status})`);
+                // Error in setting up the request
+                setShowServerErrorModal(true);
             }
-        } else if (err.request) {
-            // The request was made but no response received
-            console.error('No response received from server');
-            setError(t('wizard.errors.noResponse'));
-        } else {
-            // Error in setting up the request
-            setError(`${t('wizard.errors.generationFailed')}: ${err.message}`);
+        } finally {
+            setIsLoading(false);
         }
-    } finally {
-        setIsLoading(false);
-    }
-};
+    };
 
     const resetRecipe = () => {
         // setShowRecipe(false);
@@ -405,7 +432,15 @@ const handleSubmit = async () => {
 
                                         {currentStep === 3 && (
                                             <div className="step step-3">
-                                                <h4 className="mb-4">{t('wizard.ingredients.title')}</h4>
+                                                <div className="d-flex align-items-center justify-content-between mb-4">
+                                                    <h4 className="mb-0">{t('wizard.ingredients.title')}</h4>
+                                                    <Badge
+                                                        bg={getTotalIngredientsCount() > 15 ? "danger" : "primary"}
+                                                        className="fs-6 p-2"
+                                                    >
+                                                        {getTotalIngredientsCount()} {t('wizard.ingredients.selected')}
+                                                    </Badge>
+                                                </div>
 
                                                 <div className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'} ingredients-selection`}>
                                                     {Object.values(IngredientCategory).map((category) => (
@@ -463,11 +498,14 @@ const handleSubmit = async () => {
                                                         {Object.entries(selectedIngredients).flatMap(([category, ingredients]) =>
                                                             ingredients.map((ingredient, idx) => (
                                                                 <Badge
-                                                                    bg="primary"
+                                                                    bg={getTotalIngredientsCount() > 15 ? "danger" : "primary"}
                                                                     key={`${category}-${idx}`}
-                                                                    className="m-1 p-2"
+                                                                    className="m-1 p-2 clickable-badge"
+                                                                    style={{ cursor: 'pointer' }}
+                                                                    onClick={() => removeIngredient(category as IngredientCategory, ingredient)}
+                                                                    title="Click to remove"
                                                                 >
-                                                                    {getIngredientLabel(ingredient)}
+                                                                    {getIngredientLabel(ingredient)} ×
                                                                 </Badge>
                                                             ))
                                                         )}
@@ -475,6 +513,13 @@ const handleSubmit = async () => {
                                                             <p className="text-muted">{t('wizard.ingredients.noSelection')}</p>
                                                         )}
                                                     </div>
+                                                    {getTotalIngredientsCount() > 15 && (
+                                                        <div className="mt-2">
+                                                            <small className="text-warning">
+                                                                ⚠️ You have {getTotalIngredientsCount()} ingredients. Consider reducing for better results.
+                                                            </small>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         )}
@@ -505,7 +550,7 @@ const handleSubmit = async () => {
                                         </Button>
                                     ) : (
                                         <Button
-                                            variant="success"
+                                            variant={getTotalIngredientsCount() > 15 ? "danger" : "success"}
                                             onClick={handleSubmit}
                                             disabled={isLoading}
                                         >
@@ -522,7 +567,16 @@ const handleSubmit = async () => {
                                                     {t('wizard.steps.buttons.generating')}
                                                 </>
                                             ) : (
-                                                t('wizard.steps.buttons.submit')
+                                                <>
+                                                    {t('wizard.steps.buttons.submit')}
+                                                    <Badge
+                                                        bg={getTotalIngredientsCount() > 15 ? "warning" : "light"}
+                                                        text={getTotalIngredientsCount() > 15 ? "light" : "dark"}
+                                                        className="ms-2"
+                                                    >
+                                                        {getTotalIngredientsCount()}
+                                                    </Badge>
+                                                </>
                                             )}
                                         </Button>
                                     )}
@@ -531,6 +585,73 @@ const handleSubmit = async () => {
                         </Card>
                     </Col>
                 </Row>
+
+                {/* Too Many Requests Modal */}
+                <Modal show={showTooManyRequestsModal} onHide={() => setShowTooManyRequestsModal(false)} centered>
+                    <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
+                        <Modal.Title>{t('wizard.modals.tooManyRequests.title')}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
+                        <p>{t('wizard.modals.tooManyRequests.message')}</p>
+                        <p>{t('wizard.modals.tooManyRequests.description')}</p>
+                        <p><strong>{t('wizard.modals.tooManyRequests.note')}</strong></p>
+                    </Modal.Body>
+                    <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
+                        <Button variant="primary" onClick={() => setShowTooManyRequestsModal(false)}>
+                            {t('wizard.modals.tooManyRequests.button')}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Server Error Modal */}
+                <Modal show={showServerErrorModal} onHide={() => setShowServerErrorModal(false)} centered>
+                    <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
+                        <Modal.Title>{t('wizard.modals.serverError.title')}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
+                        <p>{t('wizard.modals.serverError.message')}</p>
+                        <p>{t('wizard.modals.serverError.description')}</p>
+                        <ul>
+                            <li>{t('wizard.modals.serverError.reasons.server')}</li>
+                            <li>{t('wizard.modals.serverError.reasons.network')}</li>
+                            <li>{t('wizard.modals.serverError.reasons.technical')}</li>
+                        </ul>
+                        <p><strong>{t('wizard.modals.serverError.note')}</strong></p>
+                    </Modal.Body>
+                    <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
+                        <Button variant="primary" onClick={() => setShowServerErrorModal(false)}>
+                            {t('wizard.modals.serverError.button')}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Ingredient Warning Modal */}
+                <Modal show={showIngredientWarningModal} onHide={() => setShowIngredientWarningModal(false)} centered>
+                    <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
+                        <Modal.Title>{t('wizard.modals.ingredientWarning.title')}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
+                        <p>{t('wizard.modals.ingredientWarning.message', { count: getTotalIngredientsCount() })}</p>
+                        <p>{t('wizard.modals.ingredientWarning.description')}</p>
+                        <ul>
+                            <li>{t('wizard.modals.ingredientWarning.reasons.time')}</li>
+                            <li>{t('wizard.modals.ingredientWarning.reasons.complexity')}</li>
+                            <li>{t('wizard.modals.ingredientWarning.reasons.balance')}</li>
+                        </ul>
+                        <p><strong>{t('wizard.modals.ingredientWarning.question')}</strong></p>
+                    </Modal.Body>
+                    <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
+                        <Button variant="secondary" onClick={() => setShowIngredientWarningModal(false)}>
+                            {t('wizard.modals.ingredientWarning.buttonReduce')}
+                        </Button>
+                        <Button variant="warning" onClick={() => {
+                            setShowIngredientWarningModal(false);
+                            executeRecipeGeneration();
+                        }}>
+                            {t('wizard.modals.ingredientWarning.buttonContinue', { count: getTotalIngredientsCount() })}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         </>
     );
