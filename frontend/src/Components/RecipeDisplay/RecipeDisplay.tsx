@@ -61,11 +61,12 @@ export function RecipeDisplay({
     // Clean up asterisks and other markdown formatting
     const cleanText = (text: string): string => {
         return text
-            .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
-            .replace(/\*(.*?)\*/g, '$1')     // Remove *italic* formatting
-            .replace(/^\*\s*/gm, '• ')       // Convert * bullets to proper bullets
+            // .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
+            // .replace(/\*(.*?)\*/g, '$1')     // Remove *italic* formatting
+            // .replace(/^\*\s*/gm, '• ')       // Convert * bullets to proper bullets
             .replace(/#/g, '')               // Remove all hashtags #
-            .replace(/[^\w\s!().,;:?•\-]/g, '') // Remove special chars except ! ( ) and common punctuation including :
+            .replace(/\*/g, '')               // Remove all asterisks *
+            // .replace(/[^\w\s!().,;:?•\-]/g, '') // Remove special chars except ! ( ) and common punctuation including :
             .trim();
     };
 

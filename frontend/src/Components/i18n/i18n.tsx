@@ -335,7 +335,7 @@ const resources = {
           "tooManyRequests": {
             "title": "🍳 Whoa There, Master Chef! 🍳",
             "message": "Looks like our kitchen is getting quite busy! 👨‍🍳",
-            "description": "You've been cooking up so many requests that our chef needs a quick breather. Please wait a moment before creating your next culinary masterpiece.",
+            "description": "You've been cooking up so many requests that our chef needs a quick breather. Please wait 24 hours before creating your next culinary masterpiece.",
             "note": "Don't worry - great recipes are worth the wait! 🕒✨",
             "button": "Got it, I'll wait! 👍"
           },
@@ -738,7 +738,7 @@ const resources = {
           "tooManyRequests": {
             "title": "🍳 רגע, מאסטר שף! 🍳",
             "message": "נראה שהמטבח שלנו די עסוק! 👨‍🍳",
-            "description": "בישלת כל כך הרבה בקשות שהשף שלנו צריך הפסקה קצרה. אנא חכה רגע לפני שתיצור את יצירת הקולינריה הבאה שלך.",
+            "description": "בישלת כל כך הרבה בקשות שהשף שלנו צריך הפסקה קצרה. אנא חכה 24 שעות לפני שתיצור את יצירת הקולינריה הבאה שלך.",
             "note": "אל תדאג - מתכונים טובים שווים את ההמתנה! 🕒✨",
             "button": "הבנתי, אחכה! 👍"
           },
