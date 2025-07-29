@@ -248,6 +248,10 @@ export function WizardForm(): JSX.Element {
                 // Handle the nested structure like { recipe: { recipe: "text", image: "url" } }
                 recipeText = response.data.recipe.recipe || '';
                 imageUrl = response.data.recipe.image || '';
+
+                // Debug logging for image URL
+                console.log('Extracted image URL from response:', imageUrl);
+                console.log('Image URL timestamp check:', imageUrl.includes('variant_'));
             } else if (typeof response.data === 'object') {
                 // Try the original approach for backward compatibility
                 if (response.data.recipeText) {

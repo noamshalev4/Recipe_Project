@@ -90,6 +90,10 @@ export const RecipeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       createdAt: new Date()
     };
 
+    // Debug logging for image URLs
+    console.log('Adding recipe with image URL:', newRecipe.imageUrl);
+    console.log('Full recipe data:', newRecipe);
+
     setRecipes(prev => [...prev, newRecipe]);
     setCurrentRecipe(newRecipe);
 
