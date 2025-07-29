@@ -68,33 +68,225 @@
   background-color: rgba(255, 193, 7, 0.1);
 }
 
-/* RTL support */
-.WizardForm.rtl {
-  direction: rtl;
+/* Bootstrap Form Check RTL Support */
+/* In RTL (Hebrew), checkboxes should appear on the right side of the text */
+[dir="rtl"] .form-check {
   text-align: right;
-}
-
-.WizardForm.rtl .step-indicator {
-  flex-direction: row-reverse;
-}
-
-.WizardForm.rtl .ingredient-selection {
-  text-align: right;
-}
-
-.WizardForm.rtl .card-header {
-  text-align: right;
-}
-
-.WizardForm.rtl .form-check {
-  padding-right: 1.5em;
   padding-left: 0;
+  padding-right: 1.25em;
 }
 
-.WizardForm.rtl .form-check .form-check-input {
-  float: right;
-  margin-right: -1.5em;
+[dir="rtl"] .form-check-input {
   margin-left: 0;
+  margin-right: -1.25em;
+  float: right;
+}
+
+[dir="rtl"] .form-check-label {
+  padding-left: 0;
+  padding-right: 0.25em;
+  /* Reduced from 0.5em to match English spacing */
+}
+
+/* For radio buttons and checkboxes in difficulty and time selection */
+[dir="rtl"] .WizardForm .form-check {
+  text-align: right;
+  padding-left: 0;
+  padding-right: 1.25em;
+}
+
+[dir="rtl"] .WizardForm .form-check-input {
+  margin-left: 0;
+  margin-right: -1.25em;
+  float: right;
+}
+
+[dir="rtl"] .WizardForm .form-check-label {
+  padding-left: 0;
+  padding-right: 0.25em;
+  /* Reduced from 0.5em to match English spacing */
+  margin-right: 0;
+  /* Removed extra margin */
+}
+
+/* Too Many Requests Modal Enhancements */
+.too-many-requests-modal .modal-header {
+  background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff6b6b) !important;
+  background-size: 200% 200% !important;
+  animation: gradient-shift 3s ease infinite;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.too-many-requests-modal .bg-gradient {
+  background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff6b6b) !important;
+  background-size: 200% 200% !important;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.floating-icon {
+  font-size: 2rem;
+  animation: gentle-float 2s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.chef-animation {
+  font-size: 2.5rem;
+  animation: chef-panic 1.5s ease-in-out infinite;
+}
+
+@keyframes chef-panic {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+
+  75% {
+    transform: scale(1.1) rotate(3deg);
+  }
+}
+
+.reasons-card {
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+  border-left: 4px solid #ffc107 !important;
+  animation: subtle-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-glow {
+  0% {
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+  }
+}
+
+.reason-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease;
+}
+
+.reason-item:hover {
+  background-color: rgba(255, 193, 7, 0.1);
+  transform: translateX(5px);
+}
+
+.reason-icon {
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+  animation: icon-wiggle 2s ease-in-out infinite;
+}
+
+@keyframes icon-wiggle {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-5deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow-effect 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-effect {
+
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+  }
+
+  50% {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(40, 167, 69, 0.8);
+  }
+}
+
+.bounce-hover {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.bounce-hover:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+}
+
+.too-many-requests-modal .modal-dialog {
+  animation: modal-slide-in 0.5s ease-out;
+}
+
+@keyframes modal-slide-in {
+  0% {
+    transform: scale(0.8) translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* RTL Support for Too Many Requests Modal */
+[dir="rtl"] .reason-item:hover {
+  transform: translateX(-5px);
+}
+
+[dir="rtl"] .reason-icon {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+/* Dark mode specific adjustments */
+.too-many-requests-modal .modal-content.bg-dark .reasons-card {
+  background-color: #495057 !important;
+  color: #fff !important;
 }
 
 .WizardForm .loading-container {
@@ -119,4 +311,217 @@
 /* RTL support for loading state */
 .WizardForm.rtl .loading-message {
   text-align: center;
+}
+
+/* Enhanced Ingredient Warning Modal Styles */
+.ingredient-warning-modal .modal-content {
+  border-radius: 20px;
+  border: 3px solid #ffc107;
+  box-shadow: 0 15px 35px rgba(255, 193, 7, 0.3);
+  overflow: hidden;
+}
+
+.ingredient-warning-modal .modal-header {
+  border-radius: 17px 17px 0 0;
+  position: relative;
+  padding: 1.5rem;
+}
+
+.ingredient-warning-modal .modal-body {
+  padding: 2rem;
+}
+
+.ingredient-warning-modal .modal-footer {
+  padding: 1.5rem;
+  border-top: 2px solid #ffc107;
+}
+
+/* Animated bounce effect for warning icon */
+.ingredient-warning-modal .animate-bounce {
+  animation: gentle-bounce 2s infinite;
+}
+
+@keyframes gentle-bounce {
+
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* Ingredient counter display styling */
+.ingredient-warning-modal .ingredient-counter-display {
+  position: relative;
+}
+
+.ingredient-warning-modal .ingredient-counter-display::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+/* Card hover effects for reasons */
+.ingredient-warning-modal .card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+.ingredient-warning-modal .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+/* Button styling enhancements */
+.ingredient-warning-modal .btn {
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+.ingredient-warning-modal .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ingredient-warning-modal .btn-outline-warning:hover {
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+  border-color: #ffc107;
+  color: #000;
+}
+
+.ingredient-warning-modal .btn-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  border: none;
+  color: #000;
+}
+
+.ingredient-warning-modal .btn-warning:hover {
+  background: linear-gradient(135deg, #ffb300 0%, #ff6f00 100%);
+  color: #000;
+}
+
+/* Background decoration animations */
+.ingredient-warning-modal .warning-background {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.ingredient-warning-modal .chef-character {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes rotate-slow {
+  0% {
+    transform: rotate(15deg);
+  }
+
+  100% {
+    transform: rotate(375deg);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Alert styling enhancements */
+.ingredient-warning-modal .alert-warning {
+  border-radius: 15px;
+  border: 2px solid #ffc107 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.ingredient-warning-modal .alert-warning::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+/* RTL support for the enhanced modal */
+.ingredient-warning-modal.rtl .modal-title {
+  text-align: right;
+}
+
+.ingredient-warning-modal.rtl .card-body {
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ingredient-warning-modal .modal-body {
+    padding: 1rem;
+  }
+
+  .ingredient-warning-modal .ingredient-counter-display div:first-child {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 1.4rem !important;
+  }
+
+  .ingredient-warning-modal .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
 }

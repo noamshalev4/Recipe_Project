@@ -520,7 +520,7 @@ export function WizardForm(): JSX.Element {
                                                     {getTotalIngredientsCount() > 15 && (
                                                         <div className="mt-2">
                                                             <small className="text-warning">
-                                                                ⚠️ You have {getTotalIngredientsCount()} ingredients. Consider reducing for better results.
+                                                                {t('wizard.ingredients.warningTooMany', { count: getTotalIngredientsCount() })}
                                                             </small>
                                                         </div>
                                                     )}
@@ -591,17 +591,56 @@ export function WizardForm(): JSX.Element {
                 </Row>
 
                 {/* Too Many Requests Modal */}
-                <Modal show={showTooManyRequestsModal} onHide={() => setShowTooManyRequestsModal(false)} centered>
-                    <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
-                        <Modal.Title>{t('wizard.modals.tooManyRequests.title')}</Modal.Title>
+                <Modal show={showTooManyRequestsModal} onHide={() => setShowTooManyRequestsModal(false)} centered size="lg" className="too-many-requests-modal">
+                    <Modal.Header closeButton className={`${isDarkMode ? 'bg-dark text-light border-secondary' : 'bg-gradient text-white'} border-0`}>
+                        <Modal.Title className="w-100 text-center fs-4 fw-bold">
+                            <div className="floating-icon mb-2">🚨</div>
+                            {t('wizard.modals.tooManyRequests.title')}
+                        </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
-                        <p>{t('wizard.modals.tooManyRequests.message')}</p>
-                        <p>{t('wizard.modals.tooManyRequests.description')}</p>
-                        <p><strong>{t('wizard.modals.tooManyRequests.note')}</strong></p>
+                    <Modal.Body className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light'} p-4`}>
+                        <div className="text-center mb-4">
+                            <div className="chef-animation mb-3">
+                                🔥👨‍🍳🔥
+                            </div>
+                            <h5 className="text-warning fw-bold mb-3">{t('wizard.modals.tooManyRequests.message')}</h5>
+                            <p className="lead">{t('wizard.modals.tooManyRequests.description')}</p>
+                        </div>
+
+                        <Card className={`${isDarkMode ? 'bg-secondary text-light' : 'bg-white'} border-warning mb-3 reasons-card`}>
+                            <Card.Body>
+                                <h6 className="text-warning mb-3">{t('wizard.modals.tooManyRequests.behindScenes')}</h6>
+                                <div className="reasons-list">
+                                    <div className="reason-item mb-2">
+                                        <span className="reason-icon"></span>
+                                        <span>{t('wizard.modals.tooManyRequests.reasons.overwork')}</span>
+                                    </div>
+                                    <div className="reason-item mb-2">
+                                        <span className="reason-icon"></span>
+                                        <span>{t('wizard.modals.tooManyRequests.reasons.cooldown')}</span>
+                                    </div>
+                                    <div className="reason-item">
+                                        <span className="reason-icon"></span>
+                                        <span>{t('wizard.modals.tooManyRequests.reasons.sanity')}</span>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        </Card>
+
+                        <div className="text-center">
+                            <div className="pulse-glow">
+                                <strong className="text-success">{t('wizard.modals.tooManyRequests.note')}</strong>
+                            </div>
+                            <p className="text-muted mt-2 fst-italic">{t('wizard.modals.tooManyRequests.subtitle')}</p>
+                        </div>
                     </Modal.Body>
-                    <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
-                        <Button variant="primary" onClick={() => setShowTooManyRequestsModal(false)}>
+                    <Modal.Footer className={`${isDarkMode ? 'bg-dark border-secondary' : 'bg-light border-0'} d-flex justify-content-center`}>
+                        <Button
+                            variant="outline-warning"
+                            size="lg"
+                            onClick={() => setShowTooManyRequestsModal(false)}
+                            className="px-4 py-2 fw-bold bounce-hover"
+                        >
                             {t('wizard.modals.tooManyRequests.button')}
                         </Button>
                     </Modal.Footer>
@@ -629,29 +668,155 @@ export function WizardForm(): JSX.Element {
                     </Modal.Footer>
                 </Modal>
 
-                {/* Ingredient Warning Modal */}
-                <Modal show={showIngredientWarningModal} onHide={() => setShowIngredientWarningModal(false)} centered>
-                    <Modal.Header closeButton className={isDarkMode ? 'bg-dark text-light border-secondary' : ''}>
-                        <Modal.Title>{t('wizard.modals.ingredientWarning.title')}</Modal.Title>
+                {/* Enhanced Ingredient Warning Modal */}
+                <Modal
+                    show={showIngredientWarningModal}
+                    onHide={() => setShowIngredientWarningModal(false)}
+                    centered
+                    size="lg"
+                    className="ingredient-warning-modal"
+                >
+                    <Modal.Header
+                        closeButton
+                        className={`${isDarkMode ? 'bg-dark text-light border-warning' : 'bg-warning'} position-relative overflow-hidden`}
+                        style={{ borderBottom: '3px solid #ffc107' }}
+                    >
+                        <div className="warning-background position-absolute" style={{
+                            top: '-20px',
+                            right: '-20px',
+                            fontSize: '120px',
+                            opacity: 0.1,
+                            color: '#fff',
+                            transform: 'rotate(15deg)'
+                        }}>
+                            🍳
+                        </div>
+                        <Modal.Title className="d-flex align-items-center w-100">
+                            <div className="warning-icon me-3 animate-bounce">
+                                <span style={{ fontSize: '2.5rem' }}>🚨</span>
+                            </div>
+                            <div className="flex-grow-1">
+                                <h4 className="mb-1" style={{ color: isDarkMode ? '#fff' : '#000' }}>
+                                    {t('wizard.modals.ingredientWarning.title')}
+                                </h4>
+                                <small className="text-muted fst-italic">
+                                    {i18n.language === 'he' ? '  ' : 'Kitchen Equipment Warning'}
+                                </small>
+                            </div>
+                        </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className={isDarkMode ? 'bg-dark text-light' : ''}>
-                        <p>{t('wizard.modals.ingredientWarning.message', { count: getTotalIngredientsCount() })}</p>
-                        <p>{t('wizard.modals.ingredientWarning.description')}</p>
-                        <ul>
-                            <li>{t('wizard.modals.ingredientWarning.reasons.time')}</li>
-                            <li>{t('wizard.modals.ingredientWarning.reasons.complexity')}</li>
-                            <li>{t('wizard.modals.ingredientWarning.reasons.balance')}</li>
-                        </ul>
-                        <p><strong>{t('wizard.modals.ingredientWarning.question')}</strong></p>
+
+                    <Modal.Body className={`${isDarkMode ? 'bg-dark text-light' : 'bg-light'} position-relative p-4`}>
+                        {/* Chef Character Background */}
+                        <div className="chef-character position-absolute" style={{
+                            bottom: '-10px',
+                            right: '-10px',
+                            opacity: 0.08,
+                            fontSize: '150px',
+                            color: '#ffc107'
+                        }}>
+                            👨‍🍳
+                        </div>
+
+                        {/* Main Content */}
+                        <div className="row">
+                            <div className="col-md-3 text-center mb-3">
+                                <div className="ingredient-counter-display">
+                                    <div
+                                        className="bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                        style={{ width: '80px', height: '80px', fontSize: '1.8rem', fontWeight: 'bold' }}
+                                    >
+                                        {getTotalIngredientsCount()}
+                                    </div>
+                                    <div className="small text-muted">
+                                        {i18n.language === 'he' ? 'מרכיבים' : 'Ingredients'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-9">
+                                <div className="alert alert-warning border-0 shadow-sm mb-3" style={{ background: 'linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%)' }}>
+                                    <h5 className="alert-heading text-warning-emphasis mb-2">
+                                        <i className="bi bi-emoji-laughing me-2"></i>
+                                        {t('wizard.modals.ingredientWarning.message', { count: getTotalIngredientsCount() })}
+                                    </h5>
+                                    <p className="mb-0 text-dark">
+                                        {t('wizard.modals.ingredientWarning.description')}
+                                    </p>
+                                </div>
+
+                                {/* Reasons Cards */}
+                                <div className="row g-2 mb-3">
+                                    <div className="col-12">
+                                        <div className="card border-warning border-2 h-100">
+                                            <div className="card-body p-3">
+                                                <div className="d-flex align-items-start">
+                                                    <span className="me-2" style={{ fontSize: '1.5rem' }}>⏰</span>
+                                                    <small className="text-dark flex-grow-1">
+                                                        {t('wizard.modals.ingredientWarning.reasons.time')}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-12">
+                                        <div className="card border-warning border-2 h-100">
+                                            <div className="card-body p-3">
+                                                <div className="d-flex align-items-start">
+                                                    <span className="me-2" style={{ fontSize: '1.5rem' }}>🧩</span>
+                                                    <small className="text-dark flex-grow-1">
+                                                        {t('wizard.modals.ingredientWarning.reasons.complexity')}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-12">
+                                        <div className="card border-warning border-2 h-100">
+                                            <div className="card-body p-3">
+                                                <div className="d-flex align-items-start">
+                                                    <span className="me-2" style={{ fontSize: '1.5rem' }}>🤹‍♂️</span>
+                                                    <small className="text-dark flex-grow-1">
+                                                        {t('wizard.modals.ingredientWarning.reasons.balance')}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Question Section */}
+                                <div className="text-center p-3 bg-warning bg-opacity-10 rounded border border-warning border-2">
+                                    <h6 className="mb-0 fw-bold text-warning-emphasis">
+                                        <i className="bi bi-question-circle me-1"></i>
+                                        {t('wizard.modals.ingredientWarning.question')}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
                     </Modal.Body>
-                    <Modal.Footer className={isDarkMode ? 'bg-dark border-secondary' : ''}>
-                        <Button variant="secondary" onClick={() => setShowIngredientWarningModal(false)}>
+
+                    <Modal.Footer className={`${isDarkMode ? 'bg-dark border-warning' : 'bg-light'} d-flex justify-content-between p-4`}>
+                        <Button
+                            variant="outline-warning"
+                            size="lg"
+                            onClick={() => setShowIngredientWarningModal(false)}
+                            className="flex-grow-1 me-2 d-flex align-items-center justify-content-center"
+                        >
+                            <i className="bi bi-arrow-left me-2"></i>
                             {t('wizard.modals.ingredientWarning.buttonReduce')}
                         </Button>
-                        <Button variant="warning" onClick={() => {
-                            setShowIngredientWarningModal(false);
-                            executeRecipeGeneration();
-                        }}>
+                        <Button
+                            variant="warning"
+                            size="lg"
+                            onClick={() => {
+                                setShowIngredientWarningModal(false);
+                                executeRecipeGeneration();
+                            }}
+                            className="flex-grow-1 ms-2 d-flex align-items-center justify-content-center"
+                            style={{ fontWeight: 'bold' }}
+                        >
+                            <i className="bi bi-rocket-takeoff me-2"></i>
                             {t('wizard.modals.ingredientWarning.buttonContinue', { count: getTotalIngredientsCount() })}
                         </Button>
                     </Modal.Footer>

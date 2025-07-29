@@ -295,7 +295,8 @@ const resources = {
           "almond_butter": "Almond Butter",
           "rice_vinegar": "Rice Vinegar",
           "balsamic_vinegar": "Balsamic Vinegar",
-          "apple_cider_vinegar": "Apple Cider Vinegar"
+          "apple_cider_vinegar": "Apple Cider Vinegar",
+          "warningTooMany": "Hey there, ambitious chef! You've selected quite a few ingredients. While we love your enthusiasm, having too many ingredients might make the recipe more complex than expected. Consider reducing the number for a simpler cooking experience."
         },
         "categories": {
           "Protein": "Protein",
@@ -333,11 +334,18 @@ const resources = {
         },
         "modals": {
           "tooManyRequests": {
-            "title": "🍳 Whoa There, Master Chef! 🍳",
-            "message": "Looks like our kitchen is getting quite busy! 👨‍🍳",
-            "description": "You've been cooking up so many requests that our chef needs a quick breather. Please wait 24 hours before creating your next culinary masterpiece.",
-            "note": "Don't worry - great recipes are worth the wait! 🕒✨",
-            "button": "Got it, I'll wait! 👍"
+            "title": "🍳 Whoa There, Speed Racer of Recipes! 🍳",
+            "message": "Hold your horses, Master Chef! 👨‍🍳",
+            "description": "You've been sending recipe requests faster than a ninja in a noodle shop! Our AI chef is impressive, but even digital chefs need coffee breaks.",
+            "reasons": {
+              "overwork": "🥵 Our chef is having a mid-life crisis about work-life balance",
+              "cooldown": "❄️ Servers need time to cool down (they're practically melting!)",
+              "sanity": "🧠 Even artificial intelligence needs a mental health break sometimes"
+            },
+            "note": "Come back in 24 hours and we promise to whip up something amazing! ✨",
+            "subtitle": "In the meantime, maybe practice your knife skills or organize your spice rack? ",
+            "behindScenes": "🤯 What's happening behind the scenes:",
+            "button": "Okay, I'll be patient... ⏰"
           },
           "serverError": {
             "title": "🔧 Kitchen Temporarily Closed 🔧",
@@ -356,9 +364,9 @@ const resources = {
             "message": "Wow! You've selected {{count}} ingredients! 🎯",
             "description": "While we love your enthusiasm, having more than 15 ingredients might:",
             "reasons": {
-              "time": "🕐 Take longer to process (our chef needs thinking time!)",
-              "complexity": "🧩 Create a more complex recipe than expected",
-              "balance": "🤹‍♂️ Make it harder to balance all those flavors"
+              "time": " Take longer to process (our chef needs thinking time!)",
+              "complexity": " Create a more complex recipe than expected",
+              "balance": " Make it harder to balance all those flavors"
             },
             "question": "Would you like to:",
             "buttonReduce": "Let me reduce ingredients 📝",
@@ -520,7 +528,7 @@ const resources = {
           "generatingMessage": "השף שלנו מכין את המתכון שלך...",
           "buttons": {
             "generating": "מייצר...",
-            "submit": "צור מתכון",
+            "submit": "צור מתכון ",
             "back": "חזרה",
             "next": "הבא"
           }
@@ -698,7 +706,8 @@ const resources = {
           "almond_butter": "חמאת שקדים",
           "rice_vinegar": "חומץ אורז",
           "balsamic_vinegar": "חומץ בלסמי",
-          "apple_cider_vinegar": "חומץ תפוחים"
+          "apple_cider_vinegar": "חומץ תפוחים",
+          "warningTooMany": "היי שף שאפתן! בחרת לא מעט מרכיבים. אמנם אנחנו אוהבים את הנלהבות שלך, אבל יותר מדי מרכיבים עלול להפוך את המתכון למורכב יותר מהצפוי. כדאי להפחית את הכמות לחוויית בישול פשוטה יותר."
         },
         "categories": {
           "Protein": "חלבון",
@@ -736,11 +745,18 @@ const resources = {
         },
         "modals": {
           "tooManyRequests": {
-            "title": "🍳 רגע, מאסטר שף! 🍳",
-            "message": "נראה שהמטבח שלנו די עסוק! 👨‍🍳",
-            "description": "בישלת כל כך הרבה בקשות שהשף שלנו צריך הפסקה קצרה. אנא חכה 24 שעות לפני שתיצור את יצירת הקולינריה הבאה שלך.",
-            "note": "אל תדאג - מתכונים טובים שווים את ההמתנה! 🕒✨",
-            "button": "הבנתי, אחכה! 👍"
+            "title": "🍳 רגע, נינג'ה של המתכונים! 🍳",
+            "message": "עצור את הסוסים, מאסטר שף! 👨‍🍳",
+            "description": "אתה שולח בקשות למתכונים מהר יותר מנינג'ה בחנות נודלס! השף הדיגיטלי שלנו מרשים, אבל גם שפים דיגיטליים צריכים הפסקות קפה.",
+            "reasons": {
+              "overwork": "🥵 השף שלנו עבר משבר אמצע חיים לגבי איזון עבודה-חיים",
+              "cooldown": "❄️ השרתים צריכים זמן להתקרר (הם כמעט נמסים!)",
+              "sanity": "🧠 גם בינה מלאכותית צריכה הפסקה נפשית לפעמים"
+            },
+            "note": "תחזור בעוד 24 שעות ואנחנו מבטיחים להכין משהו מדהים! ✨",
+            "subtitle": "בינתיים, אולי תתרגל עם הסכינים או תארגן את מדף התבלינים? ",
+            "behindScenes": "🤯 מה קורה מאחורי הקלעים:",
+            "button": "בסדר, אהיה סבלני... ⏰"
           },
           "serverError": {
             "title": "🔧 המטבח סגור זמנית 🔧",
@@ -759,9 +775,9 @@ const resources = {
             "message": "וואו! בחרת {{count}} מרכיבים! 🎯",
             "description": "אמנם אנחנו אוהבים את הנלהבות שלך, אבל יותר מ-15 מרכיבים עלול:",
             "reasons": {
-              "time": "🕐 לקחת יותר זמן לעיבוד (השף שלנו צריך זמן מחשבה!)",
-              "complexity": "🧩 ליצור מתכון מורכב יותר מהצפוי",
-              "balance": "🤹‍♂️ להקשות על איזון כל הטעמים האלה"
+              "time": " לקחת יותר זמן לעיבוד (השף שלנו צריך זמן מחשבה!)",
+              "complexity": " ליצור מתכון מורכב יותר מהצפוי",
+              "balance": " להקשות על איזון כל הטעמים האלה"
             },
             "question": "האם תרצה:",
             "buttonReduce": "בואו אפחית מרכיבים 📝",
